@@ -1,63 +1,3 @@
-<!DOCTYPE html>
-<head>
-	<title>Google Maps Tutorial</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="user-scalable=no, initial-scale=1.0">
-
-<style type='text/css'>
-	html { height: 100%; }
-	body { height: 100%; margin: 0; padding: 0;}
-	#map-container {height: 100%;}
-</style>
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-vgzgppvLTR23tPpQSSXDAOs-Kjg4I_w"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>
-
-</head>
-
-
-<body>
-
-	<div id='control' class='container'>
-		<!-- User Input goes here -->
-		<h1>Care <span id='save-icon' class="glyphicon glyphicon-zoom-in"></span></h1><h1>Compass</h1>
-		<hr />
-		<h3>Care Facility Locator</h3>
-		<div id="spacer"></div>
-		
-		<form id='search-form'>
-			<div class='form-group col-md-12'> <!-- can't get button and search box on same row with out setting grid -->
-
-				<input id="search-by-name" class='col-md-8 form-control' type='text' placeholder="Search Facility Name">
-				<button id='search-by-name-btn' class='btn btn-default' type='button' >Search</button>
-
-			</div>
-		</form>		
-	<div id='search-results'></div>
-	<div id="spacer"></div>
-
-	<p>Search by Criteria</p>
-
-	<div id="spacer"></div>
-	<hr />
-	<p>Footer</p>
-
-	</div>
-	<!-- 
-	<button id='btnTerrain'>Terrain</button>
-	<button id='btnRoadmap'>Roadmap</button>
-	<button id='btnSatellite'>Satellite</button>
-	<button id='btnHybrid'>Hybrid</button>
- 	-->
-<div id="map-container"></div>
-
-
-<script type='text/javascript'>
-
 function initialize() {
 
 	var mapOptions = { 
@@ -70,7 +10,7 @@ function initialize() {
 	map.prev_infowindow = false //track if there's an open infowindow as a map property
 
 	//addMapTypeaddButtons( map );
-	vaMapTyper markerData = parseMarkerData( ); //array of objects prepared by parseMarkerData() to send to addMarkerToMap()
+	var markerData = parseMarkerData( ); //array of objects prepared by parseMarkerData() to send to addMarkerToMap()
 	var markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
 	setMapBounds( map, markerList );
 
@@ -169,8 +109,3 @@ function attachInfowindow( map, marker, infoText ){
 //add an event listener to display the map, event is 'load', function to call is 'initialize'
 google.maps.event.addDomListener(window, 'load', initialize );	
 
-
-</script>
-
-</body>
-</html>

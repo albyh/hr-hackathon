@@ -1,0 +1,122 @@
+* {
+    font-family: "Open Sans", sans-serif;
+    //box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px
+  }
+
+body{
+    color: #686868;
+    font-size: 15px;
+    background-color: #6B7283;
+    }
+
+
+header{
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin: 0px 0px 10px 0px;
+    border-bottom: 1px solid blue;
+    padding: 10px 0px;
+    background-color: #246;
+    min-height: 130px;
+}
+
+footer{
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    margin: 0;
+    border-top: 1px solid white;
+    padding: 10px;
+    background-color: #246;
+    color: white;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 17px;
+    font-weight: 300;
+    color: #DFF;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 3rem;
+}
+h3 {
+    font-size: 2rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+p {
+    color: #DFF;
+}
+
+.searchBtn {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background: #BE757E;
+    border: 0;
+    color: #D8D8DD;
+    height: 37px;
+    line-height: 37px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.mapInfoWindow{
+    color: black;
+}
+
+.clearfix:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+.clear{
+    clear: both;
+}
+
+/* .container-fluid{
+    min-width: 400px;
+    border-radius: 10px;
+    border: 3px solid black;   
+    padding: 00px; 
+    margin: 20px auto;
+    background-color: #DDD;
+} */
+
+#map-container{
+    height: 50%; 
+    /* height: 600px;
+    width: 100%; */
+}
+
+#control{
+    float: left;
+    background-color: #247;
+    width: 30%;
+    padding: 50px 30px 10px 30px;
+    border-right: 1px solid black;
+    //min-height: 480px;
+}
+
+#spacer{
+    min-height: 50px;
+}
+
+#search-by-name{
+    width: 80%;
+}
