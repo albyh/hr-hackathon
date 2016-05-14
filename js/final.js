@@ -165,12 +165,6 @@ $( document ).ready(function() {
 			counter++;
 		});
 
-
-		google.maps.event.addListener(allMarkers, 'click', function () {
-			infowindow.setContent(this.html);
-			infowindow.open(map, this);
-		});
-
 		var bounds = new google.maps.LatLngBounds ();
 		//  Go through each...
 		for (var i = 0, ltLgLen = allLatlng.length; i < ltLgLen; i++) {
