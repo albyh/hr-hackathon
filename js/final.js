@@ -1,4 +1,4 @@
-var facilityData = {}, map={};
+var facilityData = {}, map={}, allMarkers = {};
 
 $( document ).ready(function() {
 
@@ -75,7 +75,6 @@ $( document ).ready(function() {
 		//set event handlers
 		setSearchButton();
 
-
 		//Add blank map map-container div
 		map = new google.maps.Map(document.getElementById('map-container'), mapOptions);
 
@@ -142,7 +141,7 @@ $( document ).ready(function() {
 
 		$.each( pins , function( i , val ){ 
 
-			latLng = new google.maps.LatLng(val.lat,val.lng);
+			latLng = new google.maps.LatLng(val.lat,val.lng); //for setting bounds?
 
 			allMarkers = new google.maps.Marker({
 				position: latLng,
@@ -154,20 +153,16 @@ $( document ).ready(function() {
 				'</div>'
 				});
 
-
-			//put all lat long in array
+			//put all lat long in array (to create bounds)
 			allLatlng.push(latLng);
 									
 			//Put the markers in an array
 			tempMarkerHolder.push(allMarkers);		
 
-			//Populate the info window //THIS ISN'T WORKING
-			//**********************************************************************************
-			infowindow = new google.maps.InfoWindow({
-				content: "info window content goes here..."+counter
-			});
+			//Populate the info window & event handler
+			attachInfowindow( map, allMarkers , "Info Marker "+val.name )	
 
-		counter++;
+			counter++;
 		});
 
 
@@ -187,11 +182,28 @@ $( document ).ready(function() {
 
 	}
 
+	var attachInfowindow = function( map, marker, infoText ){
+
+		var infowindow = new google.maps.InfoWindow({
+			content: infoText
+		});
+
+		marker.addListener('click', function() {
+			infowindow.open(map,marker);
+		});
+	}
+
+
 	var errorMsg = function( msg ){
 		alert( msg );
 	}
 
 
 	google.maps.event.addDomListener(window, 'load', initMap);
+
+/*	google.maps.event.addListener(allMarkers, 'click', function(event){
+		infowindow.setContent('testing');
+		infowindow.open(map, this);
+	} )*/
 
 });
