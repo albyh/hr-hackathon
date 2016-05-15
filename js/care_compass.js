@@ -10,25 +10,50 @@ function initialize() {
 	map.prev_infowindow = false //track if there's an open infowindow as a map property
 
 	//addMapTypeaddButtons( map );
-	var markerData = parseMarkerData( ); //array of objects prepared by parseMarkerData() to send to addMarkerToMap()
+	//var markerData = parseMarkerData( ); //array of objects prepared by parseMarkerData() to send to addMarkerToMap()
+	var markerData = getFacilityJson(); 
+	debugger;
 	var markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
 	setMapBounds( map, markerList );
 
 
 }
 
-function parseMarkerData( ){
+function parseMarkerData( facilityJson ){
 	//gather facility data ( getJSON() ) and 
 	//prepare data to pass to addMarker
-	//
+
+	if ( facilityJson ){
+	 	console.log('JSON received'); } else { console.warn('no JSON received'); };
+
 	var testData = [ 	{name: 'Test Facility One' 	, lat: 45.44, lng: -122.6 , totBeds: '20', availBeds: '5' , info: 'This is for infowindow One' 		},
 						{name: 'Test Facility Two' 	, lat: 45.45, lng: -122.7 , totBeds: '25', availBeds: '2' , info: 'This is for infowindow Two'  	},
 						{name: 'Test Facility Three', lat: 45.48, lng: -122.75, totBeds: '15', availBeds: '10', info: 'This is for infowindow Three'  	},
 						{name: 'Test Facility Four' , lat: 45.42, lng: -122.7 , totBeds: '40', availBeds: '0' , info: 'This is for infowindow Four' 	}
 					]
-	var markerData = markerData || testData;
 
-	return markerData
+	var markerData = facilityJson || testData;
+
+	//return markerData
+	return testData
+}
+
+function getFacilityJson( ) { 	
+		var dataURL = 'https://data.oregon.gov/api/views/37wb-r4eb/rows.json';
+		
+		$.getJSON( dataURL , function( facilityJson ){
+			console.log( 'getJSON reports \'success\'!' );
+			parsedData = parseMarkerData( facilityJson ); 
+			return parsedData;
+			})
+		.done(function(){ 
+			console.log('getJSON reports \'done\'.');
+		})
+		.fail(function(){
+			console.error( 'getJSON reports \'FAIL\'!');
+			waitMsg( false, 'Data Collection Failed. Please try later.' );
+		})
+		
 }
 
 function addMarkerToMap( map, markerData ){
@@ -48,7 +73,7 @@ function addMarkerToMap( map, markerData ){
 	//markers.setMap(map);  //only need .setMap if not included in the "Marker Options Object"
 */	
 	var marker = {}; 
-	var markerList = []; // why can't this be scoped local for jQuery .each() ? 
+	var markerList = []; 
 
 	_(markerData).forEach( function( el ){
 	
@@ -56,7 +81,7 @@ function addMarkerToMap( map, markerData ){
 							{	position: { lat:el.lat , lng:el.lng },
 								map: map, 
 								title: el.name, 
-								label: el.availBeds < 10 ? el.availBeds : '+' 
+								label: +el.availBeds < 10 ? el.availBeds : '+' //+el.availBeds forces string conversion to number
 							});
 
 		markerList.push(marker);

@@ -1,6 +1,6 @@
 * {
     font-family: "Open Sans", sans-serif;
-    //box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html, body {
@@ -15,7 +15,7 @@ body{
     background-color: #6B7283;
     }
 
-
+/* 
 header{
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
@@ -34,17 +34,23 @@ footer{
     padding: 10px;
     background-color: #246;
     color: white;
+} 
+*/
+
+hr {
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
-
 h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 17px;
-    font-weight: 300;
-    color: #DFF;
+    margin-bottom: 0px;
+    /* font-weight: 300; */
+    color: #AFF;
 }
 
 h1 {
-    font-size: 32px;
+    line-height: 5%;
+    padding: 0px;
 }
 
 h2 {
@@ -52,6 +58,8 @@ h2 {
 }
 h3 {
     font-size: 2rem;
+    padding: 0px;
+    margin: 0px;
 }
 
 h4 {
@@ -61,7 +69,7 @@ p {
     color: #DFF;
 }
 
-.searchBtn {
+/* .searchBtn {
     margin-top: 10px;
     margin-bottom: 20px;
     background: #BE757E;
@@ -72,7 +80,7 @@ p {
     width: 100%;
     text-align: center;
     cursor: pointer;
-}
+} */
 
 .mapInfoWindow{
     color: black;
@@ -99,24 +107,33 @@ p {
 } */
 
 #map-container{
-    height: 50%; 
+    height: 90%; 
     /* height: 600px;
     width: 100%; */
 }
 
 #control{
     float: left;
-    background-color: #247;
+    background-color: #6B7283;
     width: 30%;
-    padding: 50px 30px 10px 30px;
+    padding: 5px 30px 10px 30px;
     border-right: 1px solid black;
-    //min-height: 480px;
+    /* min-height: 480px; */
 }
 
 #spacer{
-    min-height: 50px;
+    min-height: 65px;
 }
 
 #search-by-name{
     width: 80%;
+}
+
+#logo{
+    margin: 0px;
+    padding: 0px;
+}
+
+#search-criteria {
+    color: orange;
 }
