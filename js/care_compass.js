@@ -103,18 +103,6 @@ function setMapBounds( map, markerList ){
 
 }
 
-function addMapTypeButtons( map ){
-
-	var gmapType = [ '#btnTerrain', '#btnRoadmap', '#btnSatellite' , '#btnHybrid' ];
-	var gmapId 	= [ google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.HYBRID ];
-
-	_(gmapId).forEach( function( val, i ){
-		$( gmapType[i] ).on('click', function(){
-			map.setMapTypeId( gmapId[i] );
-		})
-	});
-}
-
 function attachInfowindow( map, marker, infoText ){
 
 	var infowindow = new google.maps.InfoWindow({
