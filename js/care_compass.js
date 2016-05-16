@@ -5,6 +5,7 @@ function initialize() {
 
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
 	$('#search-clear').on('click', function(){ 
+		hideMapMarkers( );
 		$('#search-criteria').text('ALL Facilities' );
 		$('#search-clear').hide();
 		addMarkerToMap( map, facilityDb )
@@ -164,6 +165,11 @@ function setMapBounds( map, markerList ){
 			bounds.extend(el.position); //increase the bounds to include the new point
 		});
 
+		if (bounds.H.j == bounds.H.H ){
+			bounds.H.j -= .01
+			bounds.H.H += .01
+		}
+
 		map.fitBounds(bounds);
 
 }
@@ -193,6 +199,7 @@ function hideMapMarkers( ){
 }
 
 function closeOpenInfoWindow( map ){
+	// Could this be a method of map?
 	if (map.prev_infowindow ){
 		map.prev_infowindow.close()
 	}
@@ -223,7 +230,6 @@ function searchName( map, searchStr ){
 	}
 
 	$('#search-by-name').val(''); // Reset search field
-
 
 	closeOpenInfoWindow( map )
 
