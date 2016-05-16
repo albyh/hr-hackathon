@@ -13,9 +13,9 @@ function initialize() {
 	//addMapTypeaddButtons( map );
 	//var markerData = parseMarkerData( ); //array of objects prepared by parseMarkerData() to send to addMarkerToMap()
 	var markerData = getFacilityJson();
-	console.log(markerData);
-	var markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
-	setMapBounds( map, markerList );
+	console.log('markerdata inside initialize function', markerData);
+	// var markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
+	// setMapBounds( map, markerList );
 	console.timeEnd('initialze has finished running');
 
 }
@@ -35,27 +35,27 @@ function parseMarkerData( facilityJson ){
 
 	var markerData = facilityJson || testData;
 
-	//return markerData
-	return testData
+	return markerData
 }
 
 function getFacilityJson( ) {
-		var dataURL = 'https://data.oregon.gov/api/views/37wb-r4eb/rows.json';
+		var dataURL = 'https://data.oregon.gov/api/views/37wb-r4eb/rows.json',
+			parsedData;
 
-		$.getJSON( dataURL , function( facilityJson ){
-			console.log( 'getJSON reports \'success\'!' );
+		$.ajax({
+			url: dataURL,
+			async: false
+		}).success(function( facilityJson ){
 			parsedData = parseMarkerData( facilityJson );
 			console.timeEnd('getJSON success has finished running');
-			return parsedData;
-			})
-		.done(function(){
-			console.log('getJSON reports \'done\'.');
-		})
-		.fail(function(){
+			console.log('parsedData insided the success callback', parsedData);
+			// return parsedData;
+			}).fail(function(){
 			console.error( 'getJSON reports \'FAIL\'!');
-			waitMsg( false, 'Data Collection Failed. Please try later.' );
 		})
 
+		console.log('parsed data inside getFacilityJson', parsedData);
+		return parsedData;
 }
 
 function addMarkerToMap( map, markerData ){
