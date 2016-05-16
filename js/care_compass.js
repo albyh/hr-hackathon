@@ -37,7 +37,8 @@ function parseMarkerData( facilityJson ){
 					county:  facility[16],
 					phone:  facility[9]
 				},
-				website: facility[20]
+				website: facility[20],
+				medicareId: facility[25]
 			}
 			return facilityObj;
 		}, {});
@@ -112,7 +113,8 @@ function addMarkerToMap( map, markerData ){
 
 	var marker = {},
 		markerList = [],
-		info = ``;
+		info = ``.
+		acceptsMedicare;
 
 	_(markerData).forEach( function( location ) {
 
@@ -130,9 +132,10 @@ function addMarkerToMap( map, markerData ){
 
 		info = `<h1>${location.name}</h1>
 			<p>Address: ${location.address.street} ${location.address.city} ${location.address.state}, ${location.address.zip}</p>
-			<p>Phone: ${location.phone}</p>
+			<p>Phone: ${location.address.phone}</p>
 			<p>Available Beds: ${location.availBeds},
-			Total Beds: ${location.totBeds}</p>`
+			Total Beds: ${location.totBeds}</p>
+			Accepts Medicare: ${location.medicareId ? 'Yes' : 'No'}`
 
 		attachInfowindow( map, marker, info )	//add infowindow & event listener
 
