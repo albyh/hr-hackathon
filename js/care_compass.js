@@ -6,13 +6,11 @@ function initialize() {
 	//initialize the map with div (map-container) and options (mapOptions)
 	var map = new google.maps.Map(document.getElementById('map-container'), mapOptions );
 
-	map.prev_infowindow = false //track if there's an open infowindow as a map property
+	map.prev_infowindow = false; //track if there's an open infowindow as a map property
 
-	//addMapTypeaddButtons( map );
-	//var markerData = parseMarkerData( ); //array of objects prepared by parseMarkerData() to send to addMarkerToMap()
 	var markerData = getFacilityJson();
-	// var markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
-	// setMapBounds( map, markerList );
+	var markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
+	setMapBounds( map, markerList );
 }
 
 function parseMarkerData( facilityJson ){
@@ -26,9 +24,9 @@ function parseMarkerData( facilityJson ){
 		markerData = _.reduce(facilityJson.data, function(facilityObj, facility) {
 			facilityObj[facility[1]] = {
 				name: facility[8],
-				lat: facility[19],
-				lng: facility[18],
-				totBeds: facility[23],
+				lat: parseFloat(facility[19]),
+				lng: parseFloat(facility[18]),
+				totBeds: Math.floor(facility[23]),
 				availBeds: Math.floor(Math.random()*11),
 				type: facility[22],
 				address: {
@@ -111,32 +109,32 @@ function addMarkerToMap( map, markerData ){
 	//The google.maps.Marker constructor takes a single Marker options object literal, specifying the initial properties of the marker.
 	//position - (required) specifies a LatLng identifying the initial location of the marker.
 	//map - (optional) specifies the Map on which to place the marker.
-/*
-	var availBeds = '4'; //can display a single character on the marker
-	var latLng = {lat: 45.5231, lng: -122.6765};  //this can also be a googlemmaps.LatLng object
-	var markers = markers || new google.maps.Marker({
-		position: latLng,
-		map: map,
-		title: 'Map Marker Title (Tooltip)',
-		label: availBeds
-	});
-	//markers.setMap(map);  //only need .setMap if not included in the "Marker Options Object"
-*/
-	var marker = {};
-	var markerList = [];
 
-	_(markerData).forEach( function( el ){
+	var marker = {},
+		markerList = [],
+		info = ``;
 
-		marker = new google.maps.Marker(
-							{	position: { lat:el.lat , lng:el.lng },
-								map: map,
-								title: el.name,
-								label: +el.availBeds < 10 ? el.availBeds : '+' //+el.availBeds forces string conversion to number
-							});
+	_(markerData).forEach( function( location ) {
+
+		marker = new google.maps.Marker({
+			position: {
+				lat: location.lat,
+				lng: location.lng
+			},
+			map: map,
+			title: location.name,
+			label: location.availBeds < 10 ? location.availBeds.toString() : '+'
+		});
 
 		markerList.push(marker);
 
-		attachInfowindow( map, marker, el.info )	//add infowindow & event listener
+		info = `<h1>${location.name}</h1>
+			<p>Address: ${location.address.street} ${location.address.city} ${location.address.state}, ${location.address.zip}</p>
+			<p>Phone: ${location.phone}</p>
+			<p>Available Beds: ${location.availBeds},
+			Total Beds: ${location.totBeds}</p>`
+
+		attachInfowindow( map, marker, info )	//add infowindow & event listener
 
 	} )
 	return markerList;

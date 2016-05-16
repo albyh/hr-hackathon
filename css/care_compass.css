@@ -15,7 +15,7 @@ body{
     background-color: #6B7283;
     }
 
-/* 
+/*
 header{
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
@@ -34,7 +34,7 @@ footer{
     padding: 10px;
     background-color: #246;
     color: white;
-} 
+}
 */
 
 hr {
@@ -65,9 +65,9 @@ h3 {
 h4 {
     font-size: 1.5rem;
 }
-p {
+/*p {
     color: #DFF;
-}
+}*/
 
 /* .searchBtn {
     margin-top: 10px;
@@ -86,10 +86,10 @@ p {
     color: black;
 }
 
-.clearfix:after { 
+.clearfix:after {
    content: " ";
-   display: block; 
-   height: 0; 
+   display: block;
+   height: 0;
    clear: both;
 }
 
@@ -100,14 +100,14 @@ p {
 /* .container-fluid{
     min-width: 400px;
     border-radius: 10px;
-    border: 3px solid black;   
-    padding: 00px; 
+    border: 3px solid black;
+    padding: 00px;
     margin: 20px auto;
     background-color: #DDD;
 } */
 
 #map-container{
-    height: 90%; 
+    height: 90%;
     /* height: 600px;
     width: 100%; */
 }
