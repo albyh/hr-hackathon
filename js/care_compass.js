@@ -1,7 +1,8 @@
 function initialize() {
-
-	var mapOptions = { 
-			center: new google.maps.LatLng(45.522405,-482.676086), 
+	console.time('initialze has finished running');
+	console.time('getJSON success has finished running');
+	var mapOptions = {
+			center: new google.maps.LatLng(45.522405,-482.676086),
 			zoom: 14 };
 
 	//initialize the map with div (map-container) and options (mapOptions)
@@ -11,16 +12,16 @@ function initialize() {
 
 	//addMapTypeaddButtons( map );
 	//var markerData = parseMarkerData( ); //array of objects prepared by parseMarkerData() to send to addMarkerToMap()
-	var markerData = getFacilityJson(); 
-	debugger;
+	var markerData = getFacilityJson();
+	console.log(markerData);
 	var markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
 	setMapBounds( map, markerList );
-
+	console.timeEnd('initialze has finished running');
 
 }
 
 function parseMarkerData( facilityJson ){
-	//gather facility data ( getJSON() ) and 
+	//gather facility data ( getJSON() ) and
 	//prepare data to pass to addMarker
 
 	if ( facilityJson ){
@@ -38,22 +39,23 @@ function parseMarkerData( facilityJson ){
 	return testData
 }
 
-function getFacilityJson( ) { 	
+function getFacilityJson( ) {
 		var dataURL = 'https://data.oregon.gov/api/views/37wb-r4eb/rows.json';
-		
+
 		$.getJSON( dataURL , function( facilityJson ){
 			console.log( 'getJSON reports \'success\'!' );
-			parsedData = parseMarkerData( facilityJson ); 
+			parsedData = parseMarkerData( facilityJson );
+			console.timeEnd('getJSON success has finished running');
 			return parsedData;
 			})
-		.done(function(){ 
+		.done(function(){
 			console.log('getJSON reports \'done\'.');
 		})
 		.fail(function(){
 			console.error( 'getJSON reports \'FAIL\'!');
 			waitMsg( false, 'Data Collection Failed. Please try later.' );
 		})
-		
+
 }
 
 function addMarkerToMap( map, markerData ){
@@ -71,16 +73,16 @@ function addMarkerToMap( map, markerData ){
 		label: availBeds
 	});
 	//markers.setMap(map);  //only need .setMap if not included in the "Marker Options Object"
-*/	
-	var marker = {}; 
-	var markerList = []; 
+*/
+	var marker = {};
+	var markerList = [];
 
 	_(markerData).forEach( function( el ){
-	
+
 		marker = new google.maps.Marker(
 							{	position: { lat:el.lat , lng:el.lng },
-								map: map, 
-								title: el.name, 
+								map: map,
+								title: el.name,
 								label: +el.availBeds < 10 ? el.availBeds : '+' //+el.availBeds forces string conversion to number
 							});
 
@@ -94,7 +96,7 @@ function addMarkerToMap( map, markerData ){
 
 function setMapBounds( map, markerList ){
 		var bounds = new google.maps.LatLngBounds();
-		
+
 		_(markerList).forEach( function( el ) {
 			bounds.extend(el.position); //increase the bounds to include the new point
 		});
@@ -116,21 +118,20 @@ function addMapTypeButtons( map ){
 }
 
 function attachInfowindow( map, marker, infoText ){
-	
+
 	var infowindow = new google.maps.InfoWindow({
 		content: infoText
 	});
 
 	marker.addListener('click', function() {
-		if (map.prev_infowindow ){ 
-			map.prev_infowindow.close() 
+		if (map.prev_infowindow ){
+			map.prev_infowindow.close()
 		}
 
-		map.prev_infowindow = infowindow; 
+		map.prev_infowindow = infowindow;
 		infowindow.open(map,marker);
 	});
 }
 
 //add an event listener to display the map, event is 'load', function to call is 'initialize'
-google.maps.event.addDomListener(window, 'load', initialize );	
-
+google.maps.event.addDomListener(window, 'load', initialize );
