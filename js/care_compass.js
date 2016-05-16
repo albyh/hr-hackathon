@@ -3,8 +3,12 @@ var markerList = [];
 
 function initialize() {
 
-	$('#search-by-name-btn').on('click', function(){ searchName( map, markerList, $('#search-by-name').val() ) });
-	//$('#search-by-name-btn').on('click', {map: map, markerList: markerList, searchStr: "AVAMERE"}, searchName ); //can pass obj to callback as 'event.data'
+	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
+	$('#search-clear').on('click', function(){ 
+		$('#search-criteria').text('ALL Facilities' );
+		$('#search-clear').hide();
+		addMarkerToMap( map, facilityDb )
+	});
 
 	var mapOptions = {
 			center: new google.maps.LatLng(45.522405,-482.676086),
@@ -181,27 +185,41 @@ function attachInfowindow( map, marker, infoText ){
 }
 
 
-function hideMapMarkers( markerList ){
+function hideMapMarkers( ){
 	_(markerList).forEach( function ( el) {
     	el.setMap(null);
  	});
 }
 
-function searchName( map, markerList, searchStr ){
-	var markerData = {};
-	console.log( 'search string: ' + searchStr );
+function searchName( map, searchStr ){
+	var markerData = {}, noMatch=true;
+	//console.log( 'search string: ' + searchStr );
 	//search for all instances of searchStr
 	_(facilityDb).forEach( function( location , key ){
-		if( location.name.indexOf( searchStr.toUpperCase() ) >= 0 )
+		if( location.name.indexOf( searchStr.toUpperCase() ) >= 0 ){
+			noMatch = false;
 			markerData[key] =  location ;
+		}
 	} );
 	
-	// remove all prior markers
-	hideMapMarkers( markerList );
+	if (noMatch){
+		errorMsg( "No Matches found for "+searchStr )		
+	} else {
+		// remove all prior markers
+		hideMapMarkers( );
 
-	//add/display new markers
-	markerList = addMarkerToMap( map, markerData ) //, markerList )
+		//add/display new markers
+		markerList = addMarkerToMap( map, markerData ) //, markerList )
+		$('#search-criteria').text('Facility Name Includes:' + searchStr.toUpperCase() );
 
+		$('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
+	}
+
+	$('#search-by-name').val(''); // Reset search field
+}
+
+function errorMsg( msg ){
+	return alert( msg );
 }
 
 //add an event listener to display the map, event is 'load', function to call is 'initialize'

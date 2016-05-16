@@ -143,3 +143,7 @@ h4 {
   color: black;
   padding-bottom: 20px;
 }
+
+#search-clear{
+    display: none;
+}
