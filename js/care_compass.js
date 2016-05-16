@@ -1,6 +1,4 @@
 function initialize() {
-	console.time('initialze has finished running');
-	console.time('getJSON success has finished running');
 	var mapOptions = {
 			center: new google.maps.LatLng(45.522405,-482.676086),
 			zoom: 14 };
@@ -13,27 +11,30 @@ function initialize() {
 	//addMapTypeaddButtons( map );
 	//var markerData = parseMarkerData( ); //array of objects prepared by parseMarkerData() to send to addMarkerToMap()
 	var markerData = getFacilityJson();
-	console.log('markerdata inside initialize function', markerData);
+	console.dir(markerData);
 	// var markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
 	// setMapBounds( map, markerList );
-	console.timeEnd('initialze has finished running');
-
 }
 
 function parseMarkerData( facilityJson ){
 	//gather facility data ( getJSON() ) and
 	//prepare data to pass to addMarker
+	var markerData;
 
-	if ( facilityJson ){
-	 	console.log('JSON received'); } else { console.warn('no JSON received'); };
+	if ( facilityJson ) {
+		console.groupCollapsed('Parse Marker Data Debugging');
+	 	console.log('JSON received');
+		markerData = facilityJson.data;
 
-	var testData = [ 	{name: 'Test Facility One' 	, lat: 45.44, lng: -122.6 , totBeds: '20', availBeds: '5' , info: 'This is for infowindow One' 		},
+		} else {
+			console.warn('no JSON received');
+			markerData = [ 	{name: 'Test Facility One' 	, lat: 45.44, lng: -122.6 , totBeds: '20', availBeds: '5' , info: 'This is for infowindow One' 		},
 						{name: 'Test Facility Two' 	, lat: 45.45, lng: -122.7 , totBeds: '25', availBeds: '2' , info: 'This is for infowindow Two'  	},
 						{name: 'Test Facility Three', lat: 45.48, lng: -122.75, totBeds: '15', availBeds: '10', info: 'This is for infowindow Three'  	},
 						{name: 'Test Facility Four' , lat: 45.42, lng: -122.7 , totBeds: '40', availBeds: '0' , info: 'This is for infowindow Four' 	}
-					]
-
-	var markerData = facilityJson || testData;
+					];
+		};
+	console.groupEnd('Parse Marker Data Debugging');
 
 	return markerData
 }
@@ -44,17 +45,14 @@ function getFacilityJson( ) {
 
 		$.ajax({
 			url: dataURL,
-			async: false
-		}).success(function( facilityJson ){
+			async: false,
+			dataType: 'json'
+		}).success(function( facilityJson ) {
 			parsedData = parseMarkerData( facilityJson );
-			console.timeEnd('getJSON success has finished running');
-			console.log('parsedData insided the success callback', parsedData);
-			// return parsedData;
-			}).fail(function(){
+		}).fail(function(){
 			console.error( 'getJSON reports \'FAIL\'!');
-		})
+		});
 
-		console.log('parsed data inside getFacilityJson', parsedData);
 		return parsedData;
 }
 
