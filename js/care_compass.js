@@ -175,9 +175,10 @@ function attachInfowindow( map, marker, infoText ){
 	});
 
 	marker.addListener('click', function() {
-		if (map.prev_infowindow ){
-			map.prev_infowindow.close()
-		}
+		//if (map.prev_infowindow ){
+		//	map.prev_infowindow.close()
+		//}
+		closeOpenInfoWindow( map );
 
 		map.prev_infowindow = infowindow;
 		infowindow.open(map,marker);
@@ -189,6 +190,12 @@ function hideMapMarkers( ){
 	_(markerList).forEach( function ( el) {
     	el.setMap(null);
  	});
+}
+
+function closeOpenInfoWindow( map ){
+	if (map.prev_infowindow ){
+		map.prev_infowindow.close()
+	}
 }
 
 function searchName( map, searchStr ){
@@ -210,12 +217,16 @@ function searchName( map, searchStr ){
 
 		//add/display new markers
 		markerList = addMarkerToMap( map, markerData ) //, markerList )
-		$('#search-criteria').text('Facility Name Includes:' + searchStr.toUpperCase() );
+		$('#search-criteria').text('Facility Name Includes: ' + searchStr.toUpperCase() );
 
 		$('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
 	}
 
 	$('#search-by-name').val(''); // Reset search field
+
+
+	closeOpenInfoWindow( map )
+
 }
 
 function errorMsg( msg ){
