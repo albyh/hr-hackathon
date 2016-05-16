@@ -1,4 +1,11 @@
+var facilityDb = {}; 
+var markerList = []; 
+
 function initialize() {
+
+	$('#search-by-name-btn').on('click', function(){ searchName( map, markerList, $('#search-by-name').val() ) });
+	//$('#search-by-name-btn').on('click', {map: map, markerList: markerList, searchStr: "AVAMERE"}, searchName ); //can pass obj to callback as 'event.data'
+
 	var mapOptions = {
 			center: new google.maps.LatLng(45.522405,-482.676086),
 			zoom: 14 };
@@ -9,8 +16,8 @@ function initialize() {
 	map.prev_infowindow = false; //track if there's an open infowindow as a map property
 
 	var markerData = getFacilityJson();
-	var markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
-	setMapBounds( map, markerList );
+	facilityDb = markerData; //create global facility data
+	markerList = addMarkerToMap( map, markerData ); //addMarkerToMap() returns marker array used to set bounds
 }
 
 function parseMarkerData( facilityJson ){
@@ -111,8 +118,8 @@ function addMarkerToMap( map, markerData ){
 	//position - (required) specifies a LatLng identifying the initial location of the marker.
 	//map - (optional) specifies the Map on which to place the marker.
 
+	markerList = []
 	var marker = {},
-		markerList = [],
 		info = ``.
 		acceptsMedicare;
 
@@ -140,6 +147,9 @@ function addMarkerToMap( map, markerData ){
 		attachInfowindow( map, marker, info )	//add infowindow & event listener
 
 	} )
+
+	setMapBounds( map, markerList );
+
 	return markerList;
 }
 
@@ -168,6 +178,30 @@ function attachInfowindow( map, marker, infoText ){
 		map.prev_infowindow = infowindow;
 		infowindow.open(map,marker);
 	});
+}
+
+
+function hideMapMarkers( markerList ){
+	_(markerList).forEach( function ( el) {
+    	el.setMap(null);
+ 	});
+}
+
+function searchName( map, markerList, searchStr ){
+	var markerData = {};
+	console.log( 'search string: ' + searchStr );
+	//search for all instances of searchStr
+	_(facilityDb).forEach( function( location , key ){
+		if( location.name.indexOf( searchStr.toUpperCase() ) >= 0 )
+			markerData[key] =  location ;
+	} );
+	
+	// remove all prior markers
+	hideMapMarkers( markerList );
+
+	//add/display new markers
+	markerList = addMarkerToMap( map, markerData ) //, markerList )
+
 }
 
 //add an event listener to display the map, event is 'load', function to call is 'initialize'
