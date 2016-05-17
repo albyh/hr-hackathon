@@ -144,7 +144,7 @@ function addMarkerToMap( map, markerData ){
 			<p>Phone: ${location.address.phone}</p>
 			<p>Available Beds: ${location.availBeds},
 			Total Beds: ${location.totBeds}</p>
-			Accepts Medicare: ${location.medicareId ? 'Yes' : 'No'}`
+			Website: ${location.website ? '<a target="_blank" href="'+location.website+'">'+location.name+'</a>' : 'No website.'}`
 
 		attachInfowindow( map, marker, info )	//add infowindow & event listener
 
