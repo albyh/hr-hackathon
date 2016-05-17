@@ -1,4 +1,3 @@
-var facilityDb = {}; 
 var markerList = []; 
 
 function initialize() {
@@ -20,7 +19,7 @@ function initialize() {
 
 	map.prev_infowindow = false; //track if there's an open infowindow as a map property
 
-	getFacilityJson( map );
+	facilityDb.getFacilityJson( map );
 	//facilityDb = markerData; //create global facility data
 }
 
@@ -96,22 +95,6 @@ function parseMarkerData( facilityJson ){
 	console.groupEnd('Parse Marker Data Debugging');
 
 	return markerData
-}
-
-function getFacilityJson( map ) {
-		var dataURL = 'https://data.oregon.gov/api/views/37wb-r4eb/rows.json'
-
-		$.ajax({
-			url: dataURL,
-			async: true,
-			dataType: 'json'
-		}).success(function( facilityJson ) {
-			facilityDb = parseMarkerData( facilityJson );
-			markerList = addMarkerToMap( map, facilityDb ); //addMarkerToMap() returns marker array used to set bounds
-		}).fail(function(){
-			console.error( 'getJSON reports \'FAIL\'!');
-			facilityDb = parseMarkerData();
-		});
 }
 
 function addMarkerToMap( map, markerData ){
