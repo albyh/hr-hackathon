@@ -20,15 +20,14 @@ function initialize() {
 	map.prev_infowindow = false; //track if there's an open infowindow as a map property
 
 	facilityDb.getFacilityJson( map );
-
 }
 
 
-function resetSearch( searchType ){
-	if ( searchType === 'city' ){	
+function resetSearch( resetType ){
+	if ( resetType === 'city' ){	
 		$('#search-by-city-btn').text( 'Filter by City' );
 		$('#search-by-city-btn').removeClass( 'btn-danger' );
-	} else if( searchType === 'name' ){
+	} else if( resetType === 'name' ){
 		$('#search-criteria').text('ALL Facilities' );	
 		$('#search-clear').hide();						
 	}
@@ -36,19 +35,12 @@ function resetSearch( searchType ){
 
 
 function populateCitySearchDropdown( map, list ){
-/*	var added = [];
-	_(list).forEach( function (val , key ){
-		if( list.indexOf( val ) 
-
-		$('<li />' , { 'text' 	: val.address.city	}).appendTo( '#dynamic-city-list' ) ;
-	});*/
 
 	var cities = _.groupBy( list , 'address.city' )
 
 	for ( prop in cities){
 		$('<li />' , { 	'id' 	: prop,
 						'text' 	: prop	}).appendTo( '#dynamic-city-list' ) ;	
-		//console.log( 'adding: ' + prop )		
 	}
 
 	//bind event handler after list created
@@ -61,88 +53,17 @@ function populateCitySearchDropdown( map, list ){
 
 }
 
-function parseMarkerData( facilityJson ){
-	//gather facility data ( getJSON() ) and
-	//prepare data to pass to addMarker
-	var markerData;
-
-	if ( facilityJson ) {
-		console.groupCollapsed('Parse Marker Data Debugging');
-	 	console.log('JSON received');
-		markerData = _.reduce(facilityJson.data, function(facilityObj, facility) {
-			facilityObj[facility[1]] = {
-				name: facility[8],
-				lat: parseFloat(facility[19]),
-				lng: parseFloat(facility[18]),
-				totBeds: Math.floor(facility[23]),
-				availBeds: Math.floor(Math.random()*11),
-				type: facility[22],
-				address: {
-					street: facility[10],
-					city: facility[12],
-					state: facility[13],
-					zip: facility[14],
-					county:  facility[16],
-					phone:  facility[9]
-				},
-				website: facility[20],
-				medicareId: facility[25]
-			}
-			return facilityObj;
-		}, {});
-	} else {
-		console.warn('no JSON received');
-		markerData = [
-			{
-
-				name: 'Test Facility One',
-				lat: 45.44,
-				lng: -122.6 ,
-				totBeds: '20',
-				availBeds: '5' ,
-				info: 'This is for infowindow One'
-			},
-			{
-				name: 'Test Facility Two',
-				lat: 45.45,
-				lng: -122.7 ,
-				totBeds: '25',
-				availBeds: '2' ,
-				info: 'This is for infowindow Two'
-			},
-			{
-				name: 'Test Facility Three',
-				lat: 45.48,
-			  lng: -122.75,
-				totBeds: '15',
-				availBeds: '10',
-				info: 'This is for infowindow Three'
-			},
-			{
-				name: 'Test Facility Four' ,
-				lat: 45.42,
-				lng: -122.7 ,
-				totBeds: '40',
-				availBeds: '0' ,
-				info: 'This is for infowindow Four'
-			}
-		];
-	};
-
-	console.dir(markerData);
-	console.groupEnd('Parse Marker Data Debugging');
-
-	return markerData
-}
-
 function pinSymbol(color) {
+   
+   	//traditional marker
+	//path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
     return {
-        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+        path: google.maps.SymbolPath.CIRCLE,
         fillColor: color,
         fillOpacity: 1,
         strokeColor: '#000',
-        strokeWeight: 1,
-        scale: .8,
+        strokeWeight: 3,
+        scale: 12.5,
    };
 }
 
@@ -165,10 +86,14 @@ function addMarkerToMap( map, markerData ){
 				lng: location.lng
 			},
 			map: map,
+			label: location.availBeds < 10 ? location.availBeds.toString() : '+',
 			icon: location.availBeds < 1 ? pinSymbol( '#ff3300' ) : location.availBeds < 3 ? pinSymbol( '#ffff4d' ) : pinSymbol( '#00ff00' ),
 			title: location.name,
-			label: location.availBeds < 10 ? location.availBeds.toString() : '+'
 		});
+
+		//	need to figure out what to do with these labels as they don't display correctly on new marker/icon
+		//	label: location.availBeds < 10 ? location.availBeds.toString() : '+'
+
 
 		markerList.push(marker);
 
