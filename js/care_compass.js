@@ -12,7 +12,7 @@ function initialize() {
 	});
 
 	var mapOptions = {
-			center: new google.maps.LatLng(45.522405,-482.676086),
+			center: new google.maps.LatLng(45.522405,-122.676086),
 			zoom: 14 };
 
 	//initialize the map with div (map-container) and options (mapOptions)
@@ -122,7 +122,7 @@ function addMarkerToMap( map, markerData ){
 
 	markerList = []
 	var marker = {},
-		info = ``.
+		info = ``,
 		acceptsMedicare;
 
 	_(markerData).forEach( function( location ) {
