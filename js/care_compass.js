@@ -96,6 +96,17 @@ function parseMarkerData( facilityJson ){
 	return markerData
 }
 
+function pinSymbol(color) {
+    return {
+        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+        fillColor: color,
+        fillOpacity: 1,
+        strokeColor: '#000',
+        strokeWeight: 1,
+        scale: .8,
+   };
+}
+
 function addMarkerToMap( map, markerData ){
 	//https://developers.google.com/maps/documentation/javascript/markers
 	//The google.maps.Marker constructor takes a single Marker options object literal, specifying the initial properties of the marker.
@@ -115,6 +126,7 @@ function addMarkerToMap( map, markerData ){
 				lng: location.lng
 			},
 			map: map,
+			icon: location.availBeds < 1 ? pinSymbol( '#ff3300' ) : location.availBeds < 3 ? pinSymbol( '#ffff4d' ) : pinSymbol( '#00ff00' ),
 			title: location.name,
 			label: location.availBeds < 10 ? location.availBeds.toString() : '+'
 		});
