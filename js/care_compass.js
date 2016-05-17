@@ -7,7 +7,7 @@ function initialize() {
 		hideMapMarkers( );
 		$('#search-criteria').text('ALL Facilities' );
 		$('#search-clear').hide();
-		addMarkerToMap( map, facilityDb )
+		addMarkerToMap( map, facilityDb.data )
 	});
 
 	var mapOptions = {
@@ -20,7 +20,6 @@ function initialize() {
 	map.prev_infowindow = false; //track if there's an open infowindow as a map property
 
 	facilityDb.getFacilityJson( map );
-	//facilityDb = markerData; //create global facility data
 }
 
 function parseMarkerData( facilityJson ){
@@ -189,7 +188,7 @@ function searchName( map, searchStr ){
 	var markerData = {}, noMatch=true;
 	//console.log( 'search string: ' + searchStr );
 	//search for all instances of searchStr
-	_(facilityDb).forEach( function( location , key ){
+	_(facilityDb.data).forEach( function( location , key ){
 		if( location.name.indexOf( searchStr.toUpperCase() ) >= 0 ){
 			noMatch = false;
 			markerData[key] =  location ;

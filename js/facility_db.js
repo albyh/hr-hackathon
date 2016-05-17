@@ -8,10 +8,10 @@ facilityDb.getFacilityJson = function( map ) {
 			async: true,
 			dataType: 'json'
 		}).success(function( facilityJson ) {
-			facilityDb = parseMarkerData( facilityJson );
-			markerList = addMarkerToMap( map, facilityDb ); //addMarkerToMap() returns marker array used to set bounds
+			facilityDb.data = parseMarkerData( facilityJson );
+			markerList = addMarkerToMap( map, facilityDb.data ); //addMarkerToMap() returns marker array used to set bounds
 		}).fail(function(){
 			console.error( 'getJSON reports \'FAIL\'!');
-			facilityDb = parseMarkerData();
+			facilityDb.data = parseMarkerData();
 		});
 }
