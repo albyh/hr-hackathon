@@ -60,12 +60,20 @@ h2 {
 h3 {
     font-size: 2rem;
     padding: 0px;
-    margin: 0px;
+    margin: 0px 0px 10px 0px;
 }
 
 h4 {
     font-size: 1.5rem;
 }
+
+.dropdown-menu {
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+
 /*p {
     color: #DFF;
 }*/
@@ -123,11 +131,11 @@ h4 {
 }
 
 #spacer{
-    min-height: 65px;
+    min-height: 30px;
 }
 
 #search-by-name{
-    width: 80%;
+    width: 70%;
 }
 
 #logo{

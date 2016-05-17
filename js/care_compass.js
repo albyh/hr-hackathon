@@ -5,8 +5,8 @@ function initialize() {
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
 	$('#search-clear').on('click', function(){ 
 		hideMapMarkers( );
-		$('#search-criteria').text('ALL Facilities' );
-		$('#search-clear').hide();
+		resetSearch( 'name' )
+		resetSearch( 'city' )
 		addMarkerToMap( map, facilityDb.data )
 	});
 
@@ -20,6 +20,45 @@ function initialize() {
 	map.prev_infowindow = false; //track if there's an open infowindow as a map property
 
 	facilityDb.getFacilityJson( map );
+
+}
+
+
+function resetSearch( searchType ){
+	if ( searchType === 'city' ){	
+		$('#search-by-city-btn').text( 'Filter by City' );
+		$('#search-by-city-btn').removeClass( 'btn-danger' );
+	} else if( searchType === 'name' ){
+		$('#search-criteria').text('ALL Facilities' );	
+		$('#search-clear').hide();						
+	}
+}
+
+
+function populateCitySearchDropdown( map, list ){
+/*	var added = [];
+	_(list).forEach( function (val , key ){
+		if( list.indexOf( val ) 
+
+		$('<li />' , { 'text' 	: val.address.city	}).appendTo( '#dynamic-city-list' ) ;
+	});*/
+
+	var cities = _.groupBy( list , 'address.city' )
+
+	for ( prop in cities){
+		$('<li />' , { 	'id' 	: prop,
+						'text' 	: prop	}).appendTo( '#dynamic-city-list' ) ;	
+		//console.log( 'adding: ' + prop )		
+	}
+
+	//bind event handler after list created
+	$('.dropdown-menu li').on('click', function(){    
+  		$('.dropdown-toggle').html($(this).html() + '<span class="caret"></span>');    
+  		//this.textContent and $(this).text() = city
+  		searchCity( map , $(this).text() )
+  		$('#search-by-city-btn').addClass( 'btn-danger' );
+	})
+
 }
 
 function parseMarkerData( facilityJson ){
@@ -198,6 +237,7 @@ function closeOpenInfoWindow( map ){
 
 function searchName( map, searchStr ){
 	var markerData = {}, noMatch=true;
+
 	//console.log( 'search string: ' + searchStr );
 	//search for all instances of searchStr
 	_(facilityDb.data).forEach( function( location , key ){
@@ -210,6 +250,8 @@ function searchName( map, searchStr ){
 	if (noMatch){
 		errorMsg( "No Matches found for "+searchStr )		
 	} else {
+		resetSearch( 'city' ); //clear any city search indicators
+
 		// remove all prior markers
 		hideMapMarkers( );
 
@@ -223,8 +265,35 @@ function searchName( map, searchStr ){
 	$('#search-by-name').val(''); // Reset search field
 
 	closeOpenInfoWindow( map )
-
 }
+
+function searchCity( map, searchCity ){
+	var markerData = {}, noMatch=true;
+
+	_(facilityDb.data).forEach( function( location , key ){
+		if( location.address.city.toUpperCase() === searchCity.toUpperCase() ){
+			noMatch = false;
+			markerData[key] =  location ;
+		}
+	} );
+
+	if (noMatch){
+		errorMsg( "No Matches found for "+searchCity )		
+	} else {
+		hideMapMarkers( );
+		//debugger
+		markerList = addMarkerToMap( map, markerData ) //, markerList )
+
+		$('#search-criteria').text('City: ' + searchCity.toUpperCase() );
+
+		$('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
+	}
+
+	closeOpenInfoWindow( map )
+}
+
+
+
 
 function errorMsg( msg ){
 	return alert( msg );
