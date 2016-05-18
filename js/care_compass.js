@@ -1,9 +1,9 @@
-var markerList = []; 
+var markerList = [];
 
 function initialize() {
 
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
-	$('#search-clear').on('click', function(){ 
+	$('#search-clear').on('click', function(){
 		hideMapMarkers( );
 		resetSearch( 'name' )
 		resetSearch( 'city' )
@@ -24,28 +24,34 @@ function initialize() {
 
 
 function resetSearch( resetType ){
-	if ( resetType === 'city' ){	
+	if ( resetType === 'city' ){
 		$('#search-by-city-btn').text( 'Filter by City' );
 		$('#search-by-city-btn').removeClass( 'btn-danger' );
 	} else if( resetType === 'name' ){
-		$('#search-criteria').text('ALL Facilities' );	
-		$('#search-clear').hide();						
+		$('#search-criteria').text('ALL Facilities' );
+		$('#search-clear').hide();
 	}
 }
 
 
 function populateCitySearchDropdown( map, list ){
+	var cities = _.reduce(window.facilityDb.data, function(result, value) {
+	  if(result.indexOf(value.address.city) === -1) {
+	    result.push(value.address.city);
+	  }
+		return result;
+	  }, []).sort()
 
-	var cities = _.groupBy( list , 'address.city' )
+	_(cities).forEach(function(city){
+		$('<li />' , { 	'id' 	: city,
+						'text' 	: city	}).appendTo( '#dynamic-city-list' ) ;
+	});
 
-	for ( prop in cities){
-		$('<li />' , { 	'id' 	: prop,
-						'text' 	: prop	}).appendTo( '#dynamic-city-list' ) ;	
-	}
+
 
 	//bind event handler after list created
-	$('.dropdown-menu li').on('click', function(){    
-  		$('.dropdown-toggle').html($(this).html() + '<span class="caret"></span>');    
+	$('.dropdown-menu li').on('click', function(){
+  		$('.dropdown-toggle').html($(this).html() + '<span class="caret"></span>');
   		//this.textContent and $(this).text() = city
   		searchCity( map , $(this).text() )
   		$('#search-by-city-btn').addClass( 'btn-danger' );
@@ -54,7 +60,7 @@ function populateCitySearchDropdown( map, list ){
 }
 
 function pinSymbol(color) {
-   
+
    	//traditional marker
 	//path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
     return {
@@ -171,9 +177,9 @@ function searchName( map, searchStr ){
 			markerData[key] =  location ;
 		}
 	} );
-	
+
 	if (noMatch){
-		errorMsg( "No Matches found for "+searchStr )		
+		errorMsg( "No Matches found for "+searchStr )
 	} else {
 		resetSearch( 'city' ); //clear any city search indicators
 
@@ -203,7 +209,7 @@ function searchCity( map, searchCity ){
 	} );
 
 	if (noMatch){
-		errorMsg( "No Matches found for "+searchCity )		
+		errorMsg( "No Matches found for "+searchCity )
 	} else {
 		hideMapMarkers( );
 		//debugger
