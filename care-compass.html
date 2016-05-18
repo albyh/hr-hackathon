@@ -10,20 +10,16 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 	<script src="https://maps.googleapis.com/maps/api/js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>
 	<script src="js/facility_db.js" defer></script>
 	<script src="js/care_compass.js" defer></script>
-
-
 </head>
 
 
 <body>
-
 	<div id='control' class='container'>
 		<!-- User Input goes here -->
 		<h1>Care <span id='logo' class="glyphicon glyphicon-zoom-in"></span></h1><h2>Compass</h2>
@@ -31,21 +27,32 @@
 		<h3>Care Facility Locator</h3>
 		<div id="spacer"></div>
 
-		<h3>Begin</h3>
-		<!-- <form id='search-form'> -->
-		<div class='form-group col-md-12'> <!-- can't get button and search box on same row with out setting grid? -->
+		<h3>Filters:</h3>
+    <div class="row">
+      <div class="col-md-2">
+          Facility Name:
+      </div>
+      <div class="col-md-8" id="search-by-name">
+        <input class='col-md-8 form-control' type='text' placeholder="Filter by Facility Name">
+      </div>
+      <div class="col-md-2" id='search-by-name-btn' >
+        <button class='btn btn-default' type='button' >Search</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+          City:
+      </div>
+      <div class="col-md-10">
+        <div class="dropdown">
+          <button id="search-by-city-btn" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Filter by City<span class="caret"></span></button>
+          <ul id="dynamic-city-list" class="dropdown-menu">
+          <!-- <li><a href="#">Add dynamic city list here</a></li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
 
-			<input id="search-by-name" class='col-md-8 form-control' type='text' placeholder="Filter by Name">
-			<button id='search-by-name-btn' class='btn btn-default' type='button' >Search</button>
-			<h4>or</h4>
-			<div class="dropdown">
-				<button id="search-by-city-btn" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Filter by City<span class="caret"></span></button>
-				<ul id="dynamic-city-list" class="dropdown-menu">
-				<!-- <li><a href="#">Add dynamic city list here</a></li> -->
-				</ul>
-			</div>
-
-		</div>
 		<!-- </form> -->
 		<div id='search-results'></div>
 		<hr />
@@ -56,13 +63,9 @@
 				<button id='search-clear' class='btn btn-xs btn-danger' type='button' >Clear Search</button>
 			</div>
 		</div>
-
 	</div>
 
 <div id="map-container"></div>
-
-
-
 
 </body>
 </html>

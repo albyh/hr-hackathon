@@ -128,14 +128,23 @@ h4 {
     padding: 5px 30px 10px 30px;
     border-right: 1px solid black;
     /* min-height: 480px; */
+      color: #AFF;
 }
 
 #spacer{
     min-height: 30px;
 }
 
-#search-by-name{
-    width: 70%;
+#search-by-name {
+    padding-right: 0;
+}
+
+#search-by-name input {
+    width: 100%;
+}
+
+#search-by-name-btn  {
+    padding-left: 3px;
 }
 
 #logo{
@@ -155,4 +164,16 @@ h4 {
 
 #search-clear{
     display: none;
+}
+
+#search-by-city-btn {
+  width: 100%;
+}
+
+.row {
+  padding-top: 10px;
+}
+
+#dynamic-city-list {
+  color: black;
 }
