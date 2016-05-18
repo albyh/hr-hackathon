@@ -135,11 +135,11 @@ h4 {
     min-height: 30px;
 }
 
-#search-by-name {
+#search-by-name-div {
     padding-right: 0;
 }
 
-#search-by-name input {
+#search-by-name {
     width: 100%;
 }
 
