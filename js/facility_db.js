@@ -2,18 +2,19 @@ var facilityDb = {}; //data is in facilityDb.data property
 
 facilityDb.getFacilityJson = function( map ) {
 		var dataURL = 'https://data.oregon.gov/api/views/37wb-r4eb/rows.json'
+		var that = this;
 
 		$.ajax({
 			url: dataURL,
 			async: true,
 			dataType: 'json'
 		}).success(function( facilityJson ) {
-			this.data = parseMarkerData( facilityJson );
-			markerList = addMarkerToMap( map, this.data ); //addMarkerToMap() returns marker array used to set bounds
-			populateCitySearchDropdown( map, this.data );
+			that.data = parseMarkerData( facilityJson );
+			markerList = addMarkerToMap( map, that.data ); //addMarkerToMap() returns marker array used to set bounds
+			populateCitySearchDropdown( map, that.data );
 		}).fail(function(){
 			console.error( 'getJSON reports \'FAIL\'!');
-			this.data = parseMarkerData();
+			that.data = parseMarkerData();
 		});
 }
 
