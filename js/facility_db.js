@@ -9,7 +9,7 @@ facilityDb.getFacilityJson = function( map ) {
 			async: true,
 			dataType: 'json'
 		}).success(function( facilityJson ) {
-			that.data = parseMarkerData( facilityJson );
+			that.data = that.parseMarkerData( facilityJson );
 			markerList = addMarkerToMap( map, that.data ); //addMarkerToMap() returns marker array used to set bounds
 			populateCitySearchDropdown( map, that.data );
 		}).fail(function(){
@@ -37,9 +37,7 @@ facilityDb.Facility = function(facility) {
 		this.medicareId = facility[25];
 }
 
-
-
-function parseMarkerData( facilityJson ){
+facilityDb.parseMarkerData = function ( facilityJson ){
 	//gather facility data ( getJSON() ) and
 	//prepare data to pass to addMarker
 	var markerData;
