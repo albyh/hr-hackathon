@@ -8,12 +8,12 @@ facilityDb.getFacilityJson = function( map ) {
 			async: true,
 			dataType: 'json'
 		}).success(function( facilityJson ) {
-			facilityDb.data = parseMarkerData( facilityJson );
-			markerList = addMarkerToMap( map, facilityDb.data ); //addMarkerToMap() returns marker array used to set bounds
-			populateCitySearchDropdown( map, facilityDb.data );
+			this.data = parseMarkerData( facilityJson );
+			markerList = addMarkerToMap( map, this.data ); //addMarkerToMap() returns marker array used to set bounds
+			populateCitySearchDropdown( map, this.data );
 		}).fail(function(){
 			console.error( 'getJSON reports \'FAIL\'!');
-			facilityDb.data = parseMarkerData();
+			this.data = parseMarkerData();
 		});
 }
 
