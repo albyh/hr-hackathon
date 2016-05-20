@@ -17,6 +17,25 @@ facilityDb.getFacilityJson = function( map ) {
 		});
 }
 
+facilityDb.Facility = function(facility) {
+		this.name = facility[8];
+		this.lat = parseFloat(facility[19]);
+		this.lng = parseFloat(facility[18]);
+		this.totBeds = Math.floor(facility[23]);
+		this.availBeds = Math.floor(Math.random()*11);
+		this.type = facility[22];
+		this.address = {
+			street: facility[10],
+			city: facility[12],
+			state: facility[13],
+			zip: facility[14],
+			county:  facility[16],
+			phone:  facility[9]
+		},
+		this.website = facility[20];
+		this.medicareId = facility[25];
+}
+
 
 
 function parseMarkerData( facilityJson ){
@@ -28,24 +47,8 @@ function parseMarkerData( facilityJson ){
 		console.groupCollapsed('Parse Marker Data Debugging');
 	 	console.log('JSON received');
 		markerData = _.reduce(facilityJson.data, function(facilityObj, facility) {
-			facilityObj[facility[1]] = {
-				name: facility[8],
-				lat: parseFloat(facility[19]),
-				lng: parseFloat(facility[18]),
-				totBeds: Math.floor(facility[23]),
-				availBeds: Math.floor(Math.random()*11),
-				type: facility[22],
-				address: {
-					street: facility[10],
-					city: facility[12],
-					state: facility[13],
-					zip: facility[14],
-					county:  facility[16],
-					phone:  facility[9]
-				},
-				website: facility[20],
-				medicareId: facility[25]
-			}
+			facilityObj[facility[1]] = new facilityDb.Facility(facility);
+
 			return facilityObj;
 		}, {});
 	} else {
