@@ -10,10 +10,6 @@ function initialize() {
 		addMarkerToMap( map, facilityDb.data )
 	});
 
-	var mapOptions = {
-			center: new google.maps.LatLng(45.522405,-122.676086),
-			zoom: 14 };
-
 	//initialize the map with div (map-container) and options (mapOptions)
 	var map = new google.maps.Map(document.getElementById('map-container'), mapOptions );
 
@@ -57,69 +53,6 @@ function populateCitySearchDropdown( map, list ){
   		$('#search-by-city-btn').addClass( 'btn-danger' );
 	})
 
-}
-
-function pinSymbol(color) {
-
-   	//traditional marker
-	//path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-    return {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: color,
-        fillOpacity: 1,
-        strokeColor: '#000',
-        strokeWeight: 3,
-        scale: 12.5,
-   };
-}
-
-
-
-function setMapBounds( map, markerList ){
-		var bounds = new google.maps.LatLngBounds();
-
-		_(markerList).forEach( function( el ) {
-			bounds.extend(el.position); //increase the bounds to include the new point
-		});
-
-		if (bounds.H.j == bounds.H.H ){
-			bounds.H.j -= .01
-			bounds.H.H += .01
-		}
-
-		map.fitBounds(bounds);
-
-}
-
-function attachInfowindow( map, marker, infoText ){
-
-	var infowindow = new google.maps.InfoWindow({
-		content: infoText
-	});
-
-	marker.addListener('click', function() {
-		//if (map.prev_infowindow ){
-		//	map.prev_infowindow.close()
-		//}
-		closeOpenInfoWindow( map );
-
-		map.prev_infowindow = infowindow;
-		infowindow.open(map,marker);
-	});
-}
-
-
-function hideMapMarkers( ){
-	_(markerList).forEach( function ( el) {
-    	el.setMap(null);
- 	});
-}
-
-function closeOpenInfoWindow( map ){
-	// Could this be a method of map?
-	if (map.prev_infowindow ){
-		map.prev_infowindow.close()
-	}
 }
 
 function searchName( map, searchStr ){
@@ -178,9 +111,6 @@ function searchCity( map, searchCity ){
 
 	closeOpenInfoWindow( map )
 }
-
-
-
 
 function errorMsg( msg ){
 	return alert( msg );
