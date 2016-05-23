@@ -11,7 +11,7 @@ function initialize() {
 	});
 
 	//initialize the map with div (map-container) and options (mapOptions)
-	var map = new google.maps.Map(document.getElementById('map-container'), mapOptions );
+	var map = new google.maps.Map(document.getElementById('map-container'), m.mapOptions );
 
 	map.prev_infowindow = false; //track if there's an open infowindow as a map property
 
@@ -73,7 +73,7 @@ function searchName( map, searchStr ){
 		resetSearch( 'city' ); //clear any city search indicators
 
 		// remove all prior markers
-		hideMapMarkers( );
+		m.hideMapMarkers( );
 
 		//add/display new markers
 		markerList = addMarkerToMap( map, markerData ) //, markerList )
@@ -84,7 +84,7 @@ function searchName( map, searchStr ){
 
 	$('#search-by-name').val(''); // Reset search field
 
-	closeOpenInfoWindow( map )
+	m.closeOpenInfoWindow( map )
 }
 
 function searchCity( map, searchCity ){
@@ -100,7 +100,7 @@ function searchCity( map, searchCity ){
 	if (noMatch){
 		errorMsg( "No Matches found for "+searchCity )
 	} else {
-		hideMapMarkers( );
+		m.hideMapMarkers( );
 		//debugger
 		markerList = addMarkerToMap( map, markerData ) //, markerList )
 
@@ -109,7 +109,7 @@ function searchCity( map, searchCity ){
 		$('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
 	}
 
-	closeOpenInfoWindow( map )
+	m.closeOpenInfoWindow( map )
 }
 
 function errorMsg( msg ){

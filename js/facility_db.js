@@ -14,7 +14,7 @@ var FacilityDb = function () {
       dataType: 'json'
     }).success(function (facilityJson) {
       that.data = that.parseMarkerData(facilityJson);
-      markerList = addMarkerToMap(map, that.data); //addMarkerToMap() returns marker array used to set bounds
+      markerList = m.addMarkerToMap(map, that.data); //addMarkerToMap() returns marker array used to set bounds
       populateCitySearchDropdown(map, that.data);
     }).fail(function () {
       console.error('getJSON reports \'FAIL\'!');
@@ -97,6 +97,19 @@ var FacilityDb = function () {
     console.groupEnd('Parse Marker Data Debugging');
 
     return markerData;
+  };
+
+  this.Facility.prototype.returnMarker = function(map) {
+    return {
+			position: {
+				lat: this.lat,
+				lng: this.lng
+			},
+			map: map,
+			label: this.availBeds < 10 ? this.availBeds.toString() : '+',
+			icon: this.availBeds < 1 ? m.pinSymbol( '#ff3300' ) : this.availBeds < 3 ? m.pinSymbol( '#ffff4d' ) : m.pinSymbol( '#00ff00' ),
+			title: this.name,
+		}
   };
 }; //data is in facilityDb.data property
 
