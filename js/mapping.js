@@ -1,5 +1,5 @@
 /*jslint indent: 2 */
-/*global markerList, $, google, _*/
+/*global markerList, $, google, _, m*/
 /*jslint nomen:true */
 
 var Map = function () {
@@ -78,7 +78,6 @@ var Map = function () {
 
     markerList = [];
     var marker = {},
-      info,
       that = this;
 
     _(markerData).forEach(function (location) {
@@ -91,14 +90,14 @@ var Map = function () {
 
       markerList.push(marker);
 
-      that.attachInfowindow( map, marker, location.returnInfo() )	//add infowindow & event listener
+      that.attachInfowindow(map, marker, location.returnInfo()); //add infowindow & event listener
 
-    } )
+    });
 
-    this.setMapBounds( map, markerList );
+    this.setMapBounds(map, markerList);
 
     return markerList;
-  }
-}
+  };
+};
 
 var m = new Map();
