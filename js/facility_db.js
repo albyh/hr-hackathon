@@ -99,26 +99,26 @@ var FacilityDb = function () {
     return markerData;
   };
 
-  this.Facility.prototype.returnMarker = function(map) {
+  this.Facility.prototype.returnMarker = function (map) {
     return {
-			position: {
-				lat: this.lat,
-				lng: this.lng
-			},
-			map: map,
-			label: this.availBeds < 10 ? this.availBeds.toString() : '+',
-			icon: this.availBeds < 1 ? m.pinSymbol( '#ff3300' ) : this.availBeds < 3 ? m.pinSymbol( '#ffff4d' ) : m.pinSymbol( '#00ff00' ),
-			title: this.name,
-		}
+      position: {
+        lat: this.lat,
+        lng: this.lng
+      },
+      map: map,
+      label: this.availBeds < 10 ? this.availBeds.toString() : '+',
+      icon: this.availBeds < 1 ? m.pinSymbol('#ff3300') : this.availBeds < 3 ? m.pinSymbol('#ffff4d') : m.pinSymbol('#00ff00'),
+      title: this.name
+    };
   };
 
-  this.Facility.prototype.returnInfo = function() {
+  this.Facility.prototype.returnInfo = function () {
     return `<h1>${this.name}</h1>
-      <p>Address: ${this.address.street} ${this.address.city} ${this.address.state}, ${this.address.zip}</p>
-      <p>Phone: ${this.address.phone}</p>
-      <p>Available Beds: ${this.availBeds},
-      Total Beds: ${this.totBeds}</p>
-      Website: ${this.website ? '<a target="_blank" href="'+this.website+'">'+this.name+'</a>' : 'No website.'}`
+    <p>Address: ${this.address.street} ${this.address.city} ${this.address.state}, ${this.address.zip}</p>
+    <p>Phone: ${this.address.phone}</p>
+    <p>Available Beds: ${this.availBeds},
+    Total Beds: ${this.totBeds}</p>
+    Website: ${this.website ? '<a target="_blank" href="'+this.website+'">'+this.name+'</a>' : 'No website.'}`
   };
 }; //data is in facilityDb.data property
 
