@@ -4,10 +4,10 @@ function initialize() {
 
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
 	$('#search-clear').on('click', function(){
-		hideMapMarkers( );
+		m.hideMapMarkers( );
 		resetSearch( 'name' )
 		resetSearch( 'city' )
-		addMarkerToMap( map, facilityDb.data )
+		m.addMarkerToMap( map, facilityDb.data )
 	});
 
 	//initialize the map with div (map-container) and options (mapOptions)
@@ -76,7 +76,7 @@ function searchName( map, searchStr ){
 		m.hideMapMarkers( );
 
 		//add/display new markers
-		markerList = addMarkerToMap( map, markerData ) //, markerList )
+		markerList = m.addMarkerToMap( map, markerData ) //, markerList )
 		$('#search-criteria').text('Facility Name Includes: ' + searchStr.toUpperCase() );
 
 		$('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
@@ -102,7 +102,7 @@ function searchCity( map, searchCity ){
 	} else {
 		m.hideMapMarkers( );
 		//debugger
-		markerList = addMarkerToMap( map, markerData ) //, markerList )
+		markerList = m.addMarkerToMap( map, markerData ) //, markerList )
 
 		$('#search-criteria').text('City: ' + searchCity.toUpperCase() );
 

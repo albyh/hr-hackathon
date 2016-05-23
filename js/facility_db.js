@@ -111,6 +111,15 @@ var FacilityDb = function () {
 			title: this.name,
 		}
   };
+
+  this.Facility.prototype.returnInfo = function() {
+    return `<h1>${this.name}</h1>
+      <p>Address: ${this.address.street} ${this.address.city} ${this.address.state}, ${this.address.zip}</p>
+      <p>Phone: ${this.address.phone}</p>
+      <p>Available Beds: ${this.availBeds},
+      Total Beds: ${this.totBeds}</p>
+      Website: ${this.website ? '<a target="_blank" href="'+this.website+'">'+this.name+'</a>' : 'No website.'}`
+  };
 }; //data is in facilityDb.data property
 
 var facilityDb = new FacilityDb();

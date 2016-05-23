@@ -50,7 +50,7 @@ var Map = function () {
       //if (map.prev_infowindow ){
       //map.prev_infowindow.close()
       //}
-      closeOpenInfoWindow(map);
+      m.closeOpenInfoWindow(map);
 
       map.prev_infowindow = infowindow;
       infowindow.open(map, marker);
@@ -91,14 +91,7 @@ var Map = function () {
 
       markerList.push(marker);
 
-      info = `<h1>${location.name}</h1>
-      <p>Address: ${location.address.street} ${location.address.city} ${location.address.state}, ${location.address.zip}</p>
-      <p>Phone: ${location.address.phone}</p>
-      <p>Available Beds: ${location.availBeds},
-      Total Beds: ${location.totBeds}</p>
-      Website: ${location.website ? '<a target="_blank" href="'+location.website+'">'+location.name+'</a>' : 'No website.'}`
-
-      that.attachInfowindow( map, marker, info )	//add infowindow & event listener
+      that.attachInfowindow( map, marker, location.returnInfo() )	//add infowindow & event listener
 
     } )
 
