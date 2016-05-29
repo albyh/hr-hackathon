@@ -159,14 +159,16 @@ h4 {
 
 #search-by-name-div {
     padding-right: 0;
+    
 }
 
 #search-by-name {
-    width: auto;
+    width: 100%;    
 }
 
 #search-by-name-btn  {
     padding-left: 3px;
+    float: right;
 }
 
 #logo{
