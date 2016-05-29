@@ -5,7 +5,7 @@
 var Map = function () {
   'use strict';
 
-  var mapOptions = {
+  this.mapOptions = {
     center: new google.maps.LatLng(45.522405, -122.676086),
     zoom: 14
   };
@@ -47,12 +47,10 @@ var Map = function () {
     });
 
     marker.addListener('click', function () {
-      //if (map.prev_infowindow ){
-      //map.prev_infowindow.close()
-      //}
+
       m.closeOpenInfoWindow(map);
 
-      map.prev_infowindow = infowindow;
+      m.prev_infowindow = infowindow;
       infowindow.open(map, marker);
     });
   };
@@ -64,17 +62,12 @@ var Map = function () {
   };
 
   this.closeOpenInfoWindow = function (map) {
-    // Could this be a method of map?
-    if (map.prev_infowindow) {
-      map.prev_infowindow.close();
+    if (m.prev_infowindow) {
+      m.prev_infowindow.close();
     }
   };
 
   this.addMarkerToMap = function (map, markerData) {
-    //https://developers.google.com/maps/documentation/javascript/markers
-    //The google.maps.Marker constructor takes a single Marker options object literal, specifying the initial properties of the marker.
-    //position - (required) specifies a LatLng identifying the initial location of the marker.
-    //map - (optional) specifies the Map on which to place the marker.
 
     markerList = [];
     var marker = {},
@@ -83,10 +76,6 @@ var Map = function () {
     _(markerData).forEach(function (location) {
 
       marker = new google.maps.Marker(location.returnMarker(map));
-
-      //need to figure out what to do with these labels as they don't display correctly on new marker/icon
-      //label: location.availBeds < 10 ? location.availBeds.toString() : '+'
-
 
       markerList.push(marker);
 
