@@ -50,9 +50,20 @@ var FacilityDb = function () {
     _(list).forEach(function(facility){
       $('<li />' ,  {   'id'  : facility.id,
                 'text'  : facility.name,
-                'class' : (rowColor++ % 2 === 0) ? "facility-list even-row" : "facility-list odd-row" 
+                'class' : (rowColor++ % 2 === 0) ? "facility-list list-group-item list-group-item-success" : "facility-list list-group-item list-group-item-info" 
               }).appendTo( '#search-results' ) 
+    
+    if( facility.availBeds == 0){
+      $('#'+facility.id).prepend('<span class="label label-danger pull-left label-as-badge">'+facility.availBeds+'</span>');
+    } else if (facility.availBeds > 0 && facility.availBeds < 3){
+      $('#'+facility.id).prepend('<span class="label label-warning pull-left label-as-badge">'+facility.availBeds+'</span>');
+    } else
+    {
+      $('#'+facility.id).prepend('<span class="label label-success pull-left label-as-badge">'+facility.availBeds+'</span>');
+    }
+
     });
+
 
   }
 

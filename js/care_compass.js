@@ -9,7 +9,9 @@ function initialize() {
 	//var c = new Config; 
 
 	$( 'body' ).on('click', '.facility-list', function( event ) { 
+		$('.facility-list').removeClass('active');
 		console.log( this.id +" "+this.textContent)
+		$("#"+this.id).addClass('active');
 	});
 
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
@@ -88,8 +90,6 @@ function searchName( map, searchStr ){
 	$('#search-by-name').val(''); // Reset search field
 
 	m.closeOpenInfoWindow( map )
-
-	//listFacilities( searchList )
 }
 
 function searchCity( map, searchCity ){
@@ -115,8 +115,6 @@ function searchCity( map, searchCity ){
 	}
 
 	m.closeOpenInfoWindow( map )
-
-	//listFacilities( searchList )
 }
 
 function errorMsg( msg ){
