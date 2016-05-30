@@ -78,9 +78,8 @@ var Map = function () {
     _(markerData).forEach(function (location) {
 
       marker = new google.maps.Marker(location.returnMarker(map));
-
+      marker.set('id', location.id ); //set an id to bind to facilityList
       markerList.push(marker);
-
       that.attachInfowindow(map, marker, location.returnInfo()); //add infowindow & event listener
 
     });

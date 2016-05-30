@@ -12,6 +12,14 @@ function initialize() {
 		$('.facility-list').removeClass('active');
 		console.log( this.id +" "+this.textContent)
 		$("#"+this.id).addClass('active');
+		var i = 0, x = markerList.length; 
+		for (; i<x ; i++){
+			if (markerList[i].id === this.id){
+				break;
+			}
+		}		
+		google.maps.event.trigger(markerList[i], 'click');
+		
 	});
 
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
