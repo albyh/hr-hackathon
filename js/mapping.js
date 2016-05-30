@@ -24,14 +24,25 @@ var Map = function () {
     };
   };
 
-  this.getMarkerId = function ( facilityId ){
-    var i = 0 ; 
-    for (var x = markerList.length; i<x ; i++){
-      if (markerList[i].id === facilityId ){
-        return i;
+  this.getMarkerId = function (){
+    var i = -1 ; 
+    return { 
+      get : function() {
+        return (i>=0) ? markerList[i].id : undefined } ,
+      reset : function() { i = -1; },
+      isCurrent : function( facilityId ) {
+        return (i<0) ? false : facilityId === markerList[i].id },
+      set : function(facilityId) {
+        i = 0 //i<0 ? 0 : i;
+        for (var x = markerList.length; i < x ; i++){
+            if (markerList[i].id === facilityId ){
+              return i
+            };
+        };
+        console.error("markerList out of range error... i="+i);
       }
-    }
-  }
+    };
+  }();
 
   this.setMapBounds = function (map, markerList) {
     var bounds = new google.maps.LatLngBounds();

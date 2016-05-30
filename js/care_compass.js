@@ -8,18 +8,16 @@ function initialize() {
 	$( 'body' ).on('click', '.facility-list', function( event ) { 
 		$('.facility-list').removeClass('active');
 		console.log( this.id +" "+this.textContent)
-		$("#"+this.id).addClass('active');
 		
-		var facilityId = m.getMarkerId( this.id ) 
-
-		/*
-		var i = 0 ; 
-		for (var x = markerList.length; i<x ; i++){
-			if (markerList[i].id === this.id){
-				break;
-			}
-		} // */		
+	if ( !m.getMarkerId.isCurrent( this.id ) ){	
+		$("#"+this.id).addClass('active');
+		var facilityId = m.getMarkerId.set( this.id ) ;
 		google.maps.event.trigger(markerList[ facilityId ], 'click');
+
+	}else{
+		m.closeOpenInfoWindow( map );
+		m.getMarkerId.reset();
+}
 	});
 
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
@@ -34,9 +32,7 @@ function initialize() {
 	var map = new google.maps.Map(document.getElementById('map-container'), m.mapOptions );
 
 	facilityDb.getFacilityJson( map );
-
 	console.timeEnd( "Init" );
-
 }
 
 function resetSearch( resetType ){
