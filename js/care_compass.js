@@ -1,25 +1,25 @@
 var markerList = [];
-//var c = {}; 
 var c = new Config; 
 
 function initialize() {
 	
 	console.time( "Init" );
 
-	//var c = new Config; 
-
 	$( 'body' ).on('click', '.facility-list', function( event ) { 
 		$('.facility-list').removeClass('active');
 		console.log( this.id +" "+this.textContent)
 		$("#"+this.id).addClass('active');
-		var i = 0, x = markerList.length; 
-		for (; i<x ; i++){
+		
+		var facilityId = m.getMarkerId( this.id ) 
+
+		/*
+		var i = 0 ; 
+		for (var x = markerList.length; i<x ; i++){
 			if (markerList[i].id === this.id){
 				break;
 			}
-		}		
-		google.maps.event.trigger(markerList[i], 'click');
-		
+		} // */		
+		google.maps.event.trigger(markerList[ facilityId ], 'click');
 	});
 
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
@@ -35,7 +35,7 @@ function initialize() {
 
 	facilityDb.getFacilityJson( map );
 
-	console.timeEnd( "Init")
+	console.timeEnd( "Init" );
 
 }
 
@@ -106,7 +106,7 @@ function searchCity( map, searchCity ){
 	_(facilityDb.data).forEach( function( location , key ){
 		if( location.address.city.toUpperCase() === searchCity.toUpperCase() ){
 			noMatch = false;
-			searchList[key] =  location ;
+			searchList[key] = location ;
 		}
 	} );
 
@@ -114,11 +114,8 @@ function searchCity( map, searchCity ){
 		errorMsg( "No Matches found for "+searchCity )
 	} else {
 		m.hideMapMarkers( );
-		//debugger
-		markerList = m.addMarkerToMap( map, searchList ) //, markerList )
-
+		markerList = m.addMarkerToMap( map, searchList ) 
 		$('#search-criteria').text('City: ' + searchCity.toUpperCase() );
-
 		$('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
 	}
 

@@ -24,6 +24,15 @@ var Map = function () {
     };
   };
 
+  this.getMarkerId = function ( facilityId ){
+    var i = 0 ; 
+    for (var x = markerList.length; i<x ; i++){
+      if (markerList[i].id === facilityId ){
+        return i;
+      }
+    }
+  }
+
   this.setMapBounds = function (map, markerList) {
     var bounds = new google.maps.LatLngBounds();
 
