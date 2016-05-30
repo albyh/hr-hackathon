@@ -69,6 +69,8 @@ var Map = function () {
 
   this.addMarkerToMap = function (map, markerData) {
 
+    facilityDb.clearFacilities();
+
     markerList = [];
     var marker = {},
       that = this;
@@ -84,6 +86,8 @@ var Map = function () {
     });
 
     this.setMapBounds(map, markerList);
+
+    facilityDb.listFacilities( markerData )
 
     return markerList;
   };

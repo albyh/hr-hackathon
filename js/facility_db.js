@@ -45,6 +45,21 @@ var FacilityDb = function () {
     return markerData;
   };
 
+  this.listFacilities = function ( list ){
+    var rowColor = 1 ; 
+    _(list).forEach(function(facility){
+      $('<li />' ,  {   'id'  : facility.id,
+                'text'  : facility.name,
+                'class' : (rowColor++ % 2 === 0) ? "facility-list even-row" : "facility-list odd-row" 
+              }).appendTo( '#search-results' ) 
+    });
+
+  }
+
+  this.clearFacilities = function( ){
+    $('.facility-list').remove();
+  }
+
   this.Facility = function (facility, cached) {
     this.id = facility[ cached ? 2 : 1 ]
     this.name = facility[ cached ? 9 : 8 ]; //array position is different for cached data but only for facility name

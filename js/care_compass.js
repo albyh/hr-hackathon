@@ -8,6 +8,10 @@ function initialize() {
 
 	//var c = new Config; 
 
+	$( 'body' ).on('click', '.facility-list', function( event ) { 
+		console.log( this.id +" "+this.textContent)
+	});
+
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
 	$('#search-clear').on('click', function(){
 		m.hideMapMarkers( );
@@ -18,8 +22,6 @@ function initialize() {
 
 	//initialize the map with div (map-container) and options (mapOptions)
 	var map = new google.maps.Map(document.getElementById('map-container'), m.mapOptions );
-
-	//m.prev_infowindow = false; //track if there's an open infowindow as a map property
 
 	facilityDb.getFacilityJson( map );
 
@@ -87,7 +89,7 @@ function searchName( map, searchStr ){
 
 	m.closeOpenInfoWindow( map )
 
-	displayFacilities( searchList )
+	//listFacilities( searchList )
 }
 
 function searchCity( map, searchCity ){
@@ -114,18 +116,7 @@ function searchCity( map, searchCity ){
 
 	m.closeOpenInfoWindow( map )
 
-	displayFacilities( searchList )
-}
-
-function displayFacilities( list ){
-	var rowColor = 1 ; 
-	_(list).forEach(function(facility){
-		$('<li />' , { 	'id' 	: facility.id,
-						'text' 	: facility.name,
-						'class' : (rowColor++ % 2 === 0) ? "even-row" : "odd-row"	}).appendTo( '#search-results' ) 
-	});
-
-
+	//listFacilities( searchList )
 }
 
 function errorMsg( msg ){
