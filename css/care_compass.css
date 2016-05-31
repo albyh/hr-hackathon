@@ -91,6 +91,7 @@ span.label.pull-left {
     overflow-y: auto;
 }
 
+/* 
 .even-row {
     color: blue;
     background-color: #CDE;
@@ -102,7 +103,7 @@ span.label.pull-left {
     background-color: #DEF;
     padding: 0px 10px;
 }
-
+ */
 
 /*p {
     color: #DFF;
@@ -155,7 +156,7 @@ span.label.pull-left {
     float: left;
     background-color: #6B7283;
     width: 30%;
-    min-width: 420px;
+    min-width: 500px;
     padding: 5px 30px 10px 30px;
     border-right: 1px solid black;
     /* min-height: 480px; */

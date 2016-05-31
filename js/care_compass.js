@@ -5,9 +5,13 @@ function initialize() {
 	
 	console.time( "Init" );
 
-	setMarkerEvent();
+	setFacilityListClickEvent();
+
+	$('#search-by-name').on('focusin', function(){ $('#name-search-btn').addClass('btn-danger')});
+	$('#search-by-name').on('focusout', function(){ $('#name-search-btn').removeClass('btn-danger')});
 
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
+
 	$('#search-clear').on('click', function(){
 		m.hideMapMarkers( );
 		resetSearch( 'name' )
@@ -22,10 +26,10 @@ function initialize() {
 	console.timeEnd( "Init" );
 }
 
-function setMarkerEvent( map ){
+function setFacilityListClickEvent( map ){
 	$( 'body' ).on('click', '.facility-list', function( event ) { 
 		$('.facility-list').removeClass('active');
-		console.log( this.id +" "+this.textContent)
+		console.log( "\t"+this.id +" | "+this.textContent)
 		
 	if ( !m.getMarkerId.isCurrent( this.id ) ){	
 		$("#"+this.id).addClass('active');
@@ -75,7 +79,7 @@ function populateCitySearchDropdown( map, list ){
 
 function searchName( map, searchStr ){
 	var searchList = {}, noMatch=true;
-     
+    
 	_(facilityDb.data).forEach( function( location , key ){
 		if( location.name.indexOf( searchStr.toUpperCase() ) >= 0 ){
 			noMatch = false;

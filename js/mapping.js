@@ -72,6 +72,13 @@ var Map = function () {
 
       m.prev_infowindow = infowindow;
       infowindow.open(map, marker);
+
+      facilityDb.clearActive();
+      //console.log( "Clicked marker "+ marker.id );
+      facilityDb.setActive( marker.id )
+      var activate = document.getElementById(marker.id)
+      activate.scrollIntoView();
+      
     });
   };
 

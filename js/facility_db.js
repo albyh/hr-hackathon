@@ -45,6 +45,14 @@ var FacilityDb = function () {
     return markerData;
   };
 
+  this.clearActive = function(){
+    $('.facility-list').removeClass('active');
+  }
+
+  this.setActive = function( facilityId ){
+    $( '#'+facilityId ).addClass('active');
+  }
+
   this.listFacilities = function ( list ){
     var rowColor = 1 ; 
     _(list).forEach(function(facility){
