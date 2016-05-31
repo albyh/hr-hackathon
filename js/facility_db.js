@@ -63,8 +63,6 @@ var FacilityDb = function () {
     }
 
     });
-
-
   }
 
   this.clearFacilities = function( ){
