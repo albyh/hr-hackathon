@@ -1,5 +1,21 @@
 #Care-Compass
 
+###Branch: listbox
+###Date: 2016-05-31
+
+#####mapping.js
+  - Implemented activate.scrollIntoView() to bring facility selected from map into focus on list.
+  - Implemented getMarkerId() with a closure to track/coordinate markerList, infobox, and selected facility.
+
+#####care_compass.js
+  - Added setFacilityListClickEvent() 
+  - Added m.getMarkerId.reset() to city and name search.
+
+#####facility_db.js
+  - Added listFacilities to provide core list facility functionality. 
+  - Added clearActive and SetActive for setting active facility in list. 
+
+
 ###Branch: add-config
 ###Date: 2016-05-28
 
