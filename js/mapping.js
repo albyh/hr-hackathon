@@ -77,7 +77,7 @@ var Map = function () {
       //console.log( "Clicked marker "+ marker.id );
       facilityDb.setActive( marker.id )
       var activate = document.getElementById(marker.id)
-      activate.scrollIntoView();
+      activate.scrollIntoView(); //this will scroll to the top of the list even if selected from the list
       
     });
   };

@@ -28,11 +28,13 @@ function initialize() {
 
 function setFacilityListClickEvent( map ){
 	$( 'body' ).on('click', '.facility-list', function( event ) { 
-		$('.facility-list').removeClass('active');
+		//$('.facility-list').removeClass('active');
+		facilityDb.clearActive();
 		console.log( "\t"+this.id +" | "+this.textContent)
 		
 	if ( !m.getMarkerId.isCurrent( this.id ) ){	
-		$("#"+this.id).addClass('active');
+		//$("#"+this.id).addClass('active');
+      	facilityDb.setActive( this.id )		
 		var facilityId = m.getMarkerId.set( this.id ) ;
 		google.maps.event.trigger(markerList[ facilityId ], 'click');
 
