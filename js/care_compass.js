@@ -81,6 +81,8 @@ function populateCitySearchDropdown( map, list ){
 
 function searchName( map, searchStr ){
 	var searchList = {}, noMatch=true;
+
+	m.getMarkerId.reset();
     
 	_(facilityDb.data).forEach( function( location , key ){
 		if( location.name.indexOf( searchStr.toUpperCase() ) >= 0 ){
@@ -108,6 +110,8 @@ function searchName( map, searchStr ){
 
 function searchCity( map, searchCity ){
 	var searchList = {}, noMatch=true;
+
+	m.getMarkerId.reset();
 
 	_(facilityDb.data).forEach( function( location , key ){
 		if( location.address.city.toUpperCase() === searchCity.toUpperCase() ){
