@@ -7,8 +7,11 @@ function initialize() {
 
 	setFacilityListClickEvent();
 
-	$('#search-by-name').on('focusin', function(){ $('#name-search-btn').addClass('btn-danger')});
+	$('#search-by-name').on('input', function(){ $('#name-search-btn').addClass('btn-danger')});
 	$('#search-by-name').on('focusout', function(){ $('#name-search-btn').removeClass('btn-danger')});
+	$('#name-search-btn').on('focusin', function(){ $('#name-search-btn').addClass('btn-danger')});
+	$('#name-search-btn').on('focusout', function(){ $('#name-search-btn').removeClass('btn-danger')});
+	
 
 	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
 

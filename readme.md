@@ -1,6 +1,6 @@
 #Care-Compass
+###Version History
 
-###Branch: listbox
 ###Date: 2016-05-31
 
 #####mapping.js
@@ -15,8 +15,6 @@
   - Added listFacilities to provide core list facility functionality. 
   - Added clearActive and SetActive for setting active facility in list. 
 
-
-###Branch: add-config
 ###Date: 2016-05-28
 
 #####mapping.js

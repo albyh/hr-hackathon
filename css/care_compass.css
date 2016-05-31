@@ -85,6 +85,10 @@ span.label.pull-left {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+.info-head {
+    color: #00A;
+}
+
 .dropdown-menu {
     max-height: 400px;
     overflow: hidden;
