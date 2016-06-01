@@ -6,6 +6,7 @@ var Map = function () {
   'use strict';
 
   this.mapOptions = {
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
     center: new google.maps.LatLng(45.522405, -122.676086),
     zoom: 14
   };

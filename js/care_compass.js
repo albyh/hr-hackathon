@@ -13,7 +13,7 @@ function initialize() {
 	$('#name-search-btn').on('focusout', function(){ $('#name-search-btn').removeClass('btn-danger')});
 	
 
-	$('#search-by-name-btn').on('click', function(){ searchName( map, $('#search-by-name').val() ) });
+	$('#search-by-name-btn').on('click', function(){ facilitySearch( map, 'name' , $('#search-by-name').val() ) });
 
 	$('#search-clear').on('click', function(){
 		m.hideMapMarkers( );
@@ -76,63 +76,48 @@ function populateCitySearchDropdown( map, list ){
 	$('.dropdown-menu li').on('click', function(){
   		$('.dropdown-toggle').html($(this).html() + '<span class="caret"></span>');
   		//this.textContent and $(this).text() = city
-  		searchCity( map , $(this).text() )
+  		//searchCity( map , $(this).text() )
+  		facilitySearch( map, 'city' , $(this).text() );
   		$('#search-by-city-btn').addClass( 'btn-danger' );
 	})
 
 }
 
-function searchName( map, searchStr ){
-	var searchList = {}, noMatch=true;
-
+function facilitySearch( map, type, criteria ){
+	var searchList = {}, noMatch = true, summaryHead = '';
 	m.getMarkerId.reset();
-    
 	_(facilityDb.data).forEach( function( location , key ){
-		if( location.name.indexOf( searchStr.toUpperCase() ) >= 0 ){
-			noMatch = false;
-			searchList[key] =  location ;
+		if ( type === 'city' ){
+			if( location.address.city.toUpperCase() === criteria.toUpperCase() ){
+				summaryHead = 'City';
+				noMatch = false;
+				searchList[key] = location ;
+			}
+		} else if ( type === 'name' ) {
+			if( location.name.indexOf( criteria.toUpperCase() ) >= 0 ){
+				summaryHead = 'Facility Name Includes'; 
+				noMatch = false;
+				searchList[key] =  location ;
+			}
 		}
 	} );
-
+	
 	if (noMatch){
-		errorMsg( "No Matches found for "+searchStr )
+		errorMsg( "No Matches found for "+ criteria )
 	} else {
-		resetSearch( 'city' ); //clear any city search indicators
-
-		m.hideMapMarkers( ); // remove all prior markers
-
-		markerList = m.addMarkerToMap( map, searchList ) //add/display new markers
-		$('#search-criteria').text('Facility Name Includes: ' + searchStr.toUpperCase() );
-		$('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
+		resetSearch( type === 'city' ? 'name' : 'city' ); //clear any opposite search indicators
+		m.hideMapMarkers( );
+		markerList = m.addMarkerToMap( map, searchList ) 
+		searchSummary( summaryHead , criteria.toUpperCase() );
 	}
-
-	$('#search-by-name').val(''); // Reset search field
-
+	if( type === 'name' ) { $('#search-by-name').val(''); } // Reset search field
 	m.closeOpenInfoWindow( map )
 }
 
-function searchCity( map, searchCity ){
-	var searchList = {}, noMatch=true;
 
-	m.getMarkerId.reset();
-
-	_(facilityDb.data).forEach( function( location , key ){
-		if( location.address.city.toUpperCase() === searchCity.toUpperCase() ){
-			noMatch = false;
-			searchList[key] = location ;
-		}
-	} );
-
-	if (noMatch){
-		errorMsg( "No Matches found for "+searchCity )
-	} else {
-		m.hideMapMarkers( );
-		markerList = m.addMarkerToMap( map, searchList ) 
-		$('#search-criteria').text('City: ' + searchCity.toUpperCase() );
-		$('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
-	}
-
-	m.closeOpenInfoWindow( map )
+function searchSummary( heading , searchStr ){
+	$('#search-criteria').text( heading + ': ' + searchStr );
+	$('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
 }
 
 function errorMsg( msg ){
