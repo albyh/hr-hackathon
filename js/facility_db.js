@@ -77,6 +77,42 @@ var FacilityDb = function () {
     $('.facility-list').remove();
   }
 
+  this.search = function ( map, type, criteria ){
+    var searchList = {}, noMatch = true, summaryHead = '';
+    m.getMarkerId.reset();
+    _(facilityDb.data).forEach( function( location , key ){
+      if ( type === 'city' ){
+        if( location.address.city.toUpperCase() === criteria.toUpperCase() ){
+          summaryHead = 'City';
+          noMatch = false;
+          searchList[key] = location ;
+        }
+      } else if ( type === 'name' ) {
+        if( location.name.indexOf( criteria.toUpperCase() ) >= 0 ){
+          summaryHead = 'Facility Name Includes'; 
+          noMatch = false;
+          searchList[key] =  location ;
+        }
+      }
+    } );
+    
+    if (noMatch){
+      errorMsg( "No Matches found for "+ criteria )
+    } else {
+      resetSearch( type === 'city' ? 'name' : 'city' ); //clear any opposite search indicators
+      m.hideMapMarkers( );
+      markerList = m.addMarkerToMap( map, searchList ) 
+      facilityDb.searchSummary( summaryHead , criteria.toUpperCase() );
+    }
+    if( type === 'name' ) { $('#search-by-name').val(''); } // Reset search field
+    m.closeOpenInfoWindow( map )
+  }
+
+  this.searchSummary = function( heading , searchStr ){
+    $('#search-criteria').text( heading + ': ' + searchStr );
+    $('#search-clear').show(); //display 'clear search/display all' button once there's a search filter
+  }
+
   this.Facility = function (facility, cached) {
     this.id = facility[ cached ? 2 : 1 ]
     this.name = facility[ cached ? 9 : 8 ]; //array position is different for cached data but only for facility name
