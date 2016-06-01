@@ -104,7 +104,7 @@ var FacilityDb = function () {
       markerList = m.addMarkerToMap( map, searchList ) 
       facilityDb.searchSummary( summaryHead , criteria.toUpperCase() );
     }
-    if( type === 'name' ) { $('#search-by-name').val(''); } // Reset search field
+    $('#search-by-name').val('');  // Reset search field
     m.closeOpenInfoWindow( map )
   }
 

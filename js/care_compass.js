@@ -7,11 +7,11 @@ function initialize() {
 
 	setFacilityListClickEvent();
 
-	$('#search-by-name').on('input', function(){ $('#name-search-btn').addClass('btn-danger')});
-	$('#search-by-name').on('focusout', function(){ $('#name-search-btn').removeClass('btn-danger')});
-	$('#name-search-btn').on('focusin', function(){ $('#name-search-btn').addClass('btn-danger')});
-	$('#name-search-btn').on('focusout', function(){ $('#name-search-btn').removeClass('btn-danger')});
-	
+	$('#search-by-name').on('input', function(){ $('#name-search-btn').addClass('btn-primary')});
+	$('#search-by-name').on('focusout', function(){ $('#name-search-btn').removeClass('btn-primary')});
+	$('#name-search-btn').on('focusin', function(){
+	 if($('#search-by-name').val() != ""){$('#name-search-btn').addClass('btn-primary')} });
+	$('#name-search-btn').on('focusout', function(){ $('#name-search-btn').removeClass('btn-primary')});
 
 	$('#search-by-name-btn').on('click', function(){ facilityDb.search( map, 'name' , $('#search-by-name').val() ) });
 

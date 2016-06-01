@@ -67,6 +67,8 @@ var Map = function () {
       content: infoText
     });
 
+    google.maps.event.addListener( infowindow, 'closeclick', function() { facilityDb.clearActive() } );
+
     marker.addListener('click', function () {
 
       m.closeOpenInfoWindow(map);
