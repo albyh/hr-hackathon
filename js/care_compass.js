@@ -1,5 +1,9 @@
+"use strict";
+/* jshint undef: true, unused: false */
+/* globals _, $, Config, alert, m, console, facilityDb, google */
+
 var markerList = [];
-var c = new Config; 
+var c = new Config(); 
 
 function initialize() {
 	
@@ -7,19 +11,30 @@ function initialize() {
 
 	setFacilityListClickEvent();
 
-	$('#search-by-name').on('input', function(){ $('#name-search-btn').addClass('btn-primary')});
-	$('#search-by-name').on('focusout', function(){ $('#name-search-btn').removeClass('btn-primary')});
+	$('#search-by-name').on('input', function(){ 
+		$('#name-search-btn').addClass('btn-primary');
+	});
+	$('#search-by-name').on('focusout', function(){ 
+		$('#name-search-btn').removeClass('btn-primary');
+	});
 	$('#name-search-btn').on('focusin', function(){
-	 if($('#search-by-name').val() != ""){$('#name-search-btn').addClass('btn-primary')} });
-	$('#name-search-btn').on('focusout', function(){ $('#name-search-btn').removeClass('btn-primary')});
+		if($('#search-by-name').val() !== ""){
+			$('#name-search-btn').addClass('btn-primary');
+		} 
+	});
+	$('#name-search-btn').on('focusout', function(){ 
+		$('#name-search-btn').removeClass('btn-primary');
+	});
 
-	$('#search-by-name-btn').on('click', function(){ facilityDb.search( map, 'name' , $('#search-by-name').val() ) });
+	$('#search-by-name-btn').on('click', function(){ 
+		facilityDb.search( map, 'name' , $('#search-by-name').val()); 
+	});
 
 	$('#search-clear').on('click', function(){
 		m.hideMapMarkers( );
-		resetSearch( 'name' )
-		resetSearch( 'city' )
-		m.addMarkerToMap( map, facilityDb.data )
+		resetSearch( 'name' );
+		resetSearch( 'city' );
+		m.addMarkerToMap( map, facilityDb.data );
 	});
 
 	//initialize the map with div (map-container) and options (mapOptions)
@@ -31,13 +46,11 @@ function initialize() {
 
 function setFacilityListClickEvent( map ){
 	$( 'body' ).on('click', '.facility-list', function( event ) { 
-		//$('.facility-list').removeClass('active');
 		facilityDb.clearActive();
-		console.log( "\t"+this.id +" | "+this.textContent)
+		console.log( "\t"+this.id +" | "+this.textContent);
 		
 	if ( !m.getMarkerId.isCurrent( this.id ) ){	
-		//$("#"+this.id).addClass('active');
-      	facilityDb.setActive( this.id )		
+      	facilityDb.setActive( this.id );		
 		var facilityId = m.getMarkerId.set( this.id ) ;
 		google.maps.event.trigger(markerList[ facilityId ], 'click');
 
@@ -64,7 +77,7 @@ function populateCitySearchDropdown( map, list ){
 	    result.push(value.address.city);
 	  }
 		return result;
-	  }, []).sort()
+	  }, []).sort();
 
 	_(cities).forEach(function(city){
 		$('<li />' , { 	'id' 	: city,
@@ -78,7 +91,7 @@ function populateCitySearchDropdown( map, list ){
   		//searchCity( map , $(this).text() )
   		facilityDb.search( map, 'city' , $(this).text() );
   		$('#search-by-city-btn').addClass( 'btn-danger' );
-	})
+	});
 
 }
 
