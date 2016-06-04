@@ -38,7 +38,7 @@ var Map = function () {
         for (var x = markerList.length; i < x ; i++){
             if (markerList[i].id === facilityId ){
               return i
-            };
+            }
         };
         console.error("markerList out of range error... i="+i);
       }
@@ -80,7 +80,8 @@ var Map = function () {
       //console.log( "Clicked marker "+ marker.id );
       facilityDb.setActive( marker.id )
       var activate = document.getElementById(marker.id)
-      activate.scrollIntoView(); //this will scroll to the top of the list even if selected from the list
+      //this will scroll to the top of the list even if selected from the list
+      activate.scrollIntoView(); 
       
     });
   };
