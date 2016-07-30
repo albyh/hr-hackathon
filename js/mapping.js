@@ -38,7 +38,7 @@ var Map = function () {
         for (var x = markerList.length; i < x ; i++){
             if (markerList[i].id === facilityId ){
               return i
-            }
+            };
         };
         console.error("markerList out of range error... i="+i);
       }
@@ -52,9 +52,13 @@ var Map = function () {
       bounds.extend(el.position); //increase the bounds to include the new point
     });
 
+    //if (bounds.H.j === bounds.H.H) {
     if (bounds.b.b === bounds.b.f) {
+        //bounds.H.j -= 0.01;
         bounds.b.b -= 0.01;
+        //bounds.H.H += 0.01;
         bounds.b.f += 0.01;
+    }
 
     map.fitBounds(bounds);
 
@@ -79,8 +83,7 @@ var Map = function () {
       //console.log( "Clicked marker "+ marker.id );
       facilityDb.setActive( marker.id )
       var activate = document.getElementById(marker.id)
-      //this will scroll to the top of the list even if selected from the list
-      activate.scrollIntoView(); 
+      activate.scrollIntoView(); //this will scroll to the top of the list even if selected from the list
       
     });
   };
