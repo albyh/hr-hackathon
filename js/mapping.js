@@ -52,10 +52,9 @@ var Map = function () {
       bounds.extend(el.position); //increase the bounds to include the new point
     });
 
-    if (bounds.H.j === bounds.H.H) {
-      bounds.H.j -= 0.01;
-      bounds.H.H += 0.01;
-    }
+    if (bounds.b.b === bounds.b.f) {
+        bounds.b.b -= 0.01;
+        bounds.b.f += 0.01;
 
     map.fitBounds(bounds);
 
